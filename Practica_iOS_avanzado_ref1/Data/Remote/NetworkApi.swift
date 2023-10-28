@@ -32,6 +32,11 @@ final class NetworkApi: NetworkApiProtocol {
         static let heroes = "/heros/all"
         static let heroLocations = "/heros/locations"
     }
+    private let vaultApi: VaultApiProtocol
+    
+    init(vaultApi: VaultApiProtocol){
+        self.vaultApi = vaultApi
+    }
     
     func loginWith(user: String, password: String, completion: @escaping (Result<String, NetworkError>) -> Void) {
         guard let url = URL(string: "\(NetworkApi.apiBaseURL)\(Endpoint.login)") else {
@@ -46,7 +51,7 @@ final class NetworkApi: NetworkApiProtocol {
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("Basic \(loginData)", forHTTPHeaderField: "Authorization")
         
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        URLSession.shared.dataTask(with: urlRequest) { [weak self] data, response, error in
             guard error == nil else {
                 completion(.failure(.unknown))
                 return
@@ -67,6 +72,7 @@ final class NetworkApi: NetworkApiProtocol {
                 completion(.failure(.decodingFailed))
                 return
             }
+            self?.vaultApi.saveToken(token)
             completion(.success(token))
         }.resume()
     }

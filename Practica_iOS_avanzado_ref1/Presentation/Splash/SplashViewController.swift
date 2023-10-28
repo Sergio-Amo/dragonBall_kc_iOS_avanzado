@@ -18,8 +18,8 @@ enum SplashViewState {
 protocol SplashViewControllerDelegate {
     var viewState: ((SplashViewState) -> Void)? { get set }
     var loginViewModel: LoginViewControllerDelegate { get }
-    //var heroesViewModel: HeroesViewControllerDelegate { get }
-    // TODO: remove after implementing HeroesDelegate
+    var heroesViewModel: HeroesViewControllerDelegate { get }
+
     func onViewAppear()
 }
 
@@ -48,10 +48,10 @@ final class SplashViewController: UIViewController {
                 guard let loginViewController = segue.destination as? LoginViewController else { return }
                 loginViewController.viewModel = viewModel?.loginViewModel
                 
-                /* case "SPLASH_TO_HEROES":
-                 guard let heroesViewController = segue.destination as? HeroesViewController else { return }
-                 heroesViewController.viewModel = viewModel?.heroesViewModel
-                 */
+            case "SPLASH_TO_HEROES":
+                guard let heroesViewController = segue.destination as? HeroesViewController else { return }
+                heroesViewController.viewModel = viewModel?.heroesViewModel
+                
             default:
                 break
         }

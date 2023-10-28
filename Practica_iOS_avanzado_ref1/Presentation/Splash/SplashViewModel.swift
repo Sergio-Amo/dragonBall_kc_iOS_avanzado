@@ -16,18 +16,12 @@ final class SplashViewModel: SplashViewControllerDelegate {
     var viewState: ((SplashViewState) -> Void)?
 
     lazy var loginViewModel: LoginViewControllerDelegate = {
-        LoginViewModel(
-            networkApi: networkApi,
-            vaultApi: vaultApi
-        )
+        LoginViewModel(networkApi: networkApi)
     }()
 
-    /*lazy var heroesViewModel: HeroesViewControllerDelegate = {
-        HeroesViewModel(
-            networkApi: networkApi,
-            vaultApi: vaultApi
-        )
-    }()*/
+    lazy var heroesViewModel: HeroesViewControllerDelegate = {
+        HeroesViewModel(networkApi: networkApi)
+    }()
 
     private var tokenExists: Bool {
         vaultApi.getToken()?.isEmpty == false

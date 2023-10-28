@@ -10,15 +10,13 @@ import Foundation
 final class LoginViewModel: LoginViewControllerDelegate {
     // MARK: - Dependencies -
     private let networkApi: NetworkApiProtocol
-    private let vaultApi: VaultApiProtocol
 
     // MARK: - Properties -
     var viewState: ((LoginViewState) -> Void)?
 
     // MARK: - Initializers -
-    init(networkApi: NetworkApiProtocol, vaultApi: VaultApiProtocol) {
+    init(networkApi: NetworkApiProtocol) {
         self.networkApi = networkApi
-        self.vaultApi = vaultApi
     }
     
     // MARK: - Public functions -
@@ -63,9 +61,8 @@ final class LoginViewModel: LoginViewControllerDelegate {
     private func doLoginWith(email: String, password: String) {
         networkApi.loginWith(user: email, password: password) { [weak self] result in
             switch result {
-                case let .success(token):
-                    // TODO: navigateToNext
-                    self?.vaultApi.saveToken(token)
+                case .success(_):
+                    // Login succesful and token saved inside the vault.
                     self?.viewState?(.navigateToNext)
                 case let .failure(error):
                     // TODO: popup error
@@ -75,10 +72,11 @@ final class LoginViewModel: LoginViewControllerDelegate {
                     guard let statusCode = (error as? HTTPURLResponse)?.statusCode else {
                         return
                     }
-                    // TODO: move this to the splash
-                    if statusCode == 401 || statusCode == 403 {
+                    print(statusCode)
+                    // TODO: move this to the splash and add popup for errors
+                   /* if statusCode == 401 || statusCode == 403 {
                         self?.vaultApi.removeToken()
-                    }
+                    }*/
             }
         }
     }
