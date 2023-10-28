@@ -7,10 +7,12 @@
 
 import Foundation
 
-class SplashViewModel: SplashViewControllerDelegate {
+final class SplashViewModel: SplashViewControllerDelegate {
+    // MARK: - Dependencies -
     private let networkApi: NetworkApiProtocol
     private let vaultApi: VaultApiProtocol
 
+    // MARK: - Properties -
     var viewState: ((SplashViewState) -> Void)?
 
     lazy var loginViewModel: LoginViewControllerDelegate = {
@@ -31,12 +33,13 @@ class SplashViewModel: SplashViewControllerDelegate {
         vaultApi.getToken()?.isEmpty == false
     }
 
-
+    // MARK: - Initializers -
     init(networkApi: NetworkApiProtocol, vaultApi: VaultApiProtocol) {
         self.networkApi = networkApi
         self.vaultApi = vaultApi
     }
-
+    
+    // MARK: - Public functions -
     func onViewAppear() {
         viewState?(.loading(true))
         DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in

@@ -7,10 +7,10 @@
 
 import Foundation
 
-class LoginViewModel: LoginViewControllerDelegate {
+final class LoginViewModel: LoginViewControllerDelegate {
     // MARK: - Dependencies -
-    var networkApi: NetworkApiProtocol
-    var vaultApi: VaultApiProtocol
+    private let networkApi: NetworkApiProtocol
+    private let vaultApi: VaultApiProtocol
 
     // MARK: - Properties -
     var viewState: ((LoginViewState) -> Void)?

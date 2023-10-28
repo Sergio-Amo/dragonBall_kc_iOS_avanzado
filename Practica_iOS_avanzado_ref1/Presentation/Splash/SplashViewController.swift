@@ -7,34 +7,38 @@
 
 import UIKit
 
+// MARK: - View State -
 enum SplashViewState {
     case loading(_ isLoading: Bool)
     case navigateToLogin
     case navigateToHeroes
 }
 
+// MARK: - View Protocol -
 protocol SplashViewControllerDelegate {
     var viewState: ((SplashViewState) -> Void)? { get set }
     var loginViewModel: LoginViewControllerDelegate { get }
     //var heroesViewModel: HeroesViewControllerDelegate { get }
-    
+    // TODO: remove after implementing HeroesDelegate
     func onViewAppear()
 }
 
-class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController {
+    // MARK: - IBOutlet -
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    // MARK: - Public Properties -
     var viewModel: SplashViewControllerDelegate?
     
+    // MARK: - Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
         setObservers()
         viewModel?.onViewAppear()
     }
-    
+    // Remove navigation bar
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
@@ -53,6 +57,7 @@ class SplashViewController: UIViewController {
         }
     }
     
+    // MARK: - Private functions -
     private func setObservers() {
         viewModel?.viewState = { [weak self] state in
             DispatchQueue.main.async {

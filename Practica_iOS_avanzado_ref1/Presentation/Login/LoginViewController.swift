@@ -21,7 +21,7 @@ enum LoginViewState {
     case navigateToNext
 }
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
     // MARK: - IBOutlet -
     @IBOutlet weak var userField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
