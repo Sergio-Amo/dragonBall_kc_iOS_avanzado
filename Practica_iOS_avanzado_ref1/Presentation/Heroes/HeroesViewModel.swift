@@ -31,6 +31,15 @@ class HeroesViewModel: HeroesViewControllerDelegate {
         // Load heroes from local if possible
         CoreDataStack.shared.heroDAOCount == 0 ? getHeroesRemote() : getHeroesLocal()
     }
+    
+    func onResetPressed() {
+        // Clear keychain (vault)
+        VaultApi().removeToken()
+        // Clear CoreData
+        CoreDataStack.shared.removeHeroes()
+        // Exit from app
+        exit(0)
+    }
 
     func heroAt(index: Int) -> Hero? {
         guard index < heroesCount else { return nil }

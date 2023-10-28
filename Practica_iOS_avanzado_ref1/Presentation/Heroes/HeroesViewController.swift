@@ -18,6 +18,7 @@ protocol HeroesViewControllerDelegate {
     var viewState: ((HeroesViewState) -> Void)? { get set }
     var heroesCount: Int { get }
     
+    func onResetPressed()
     func onViewAppear()
     func heroAt(index: Int) -> Hero?
     //func heroDetailViewModel(for index: Int) -> HeroDetailViewControllerDelegate?
@@ -37,10 +38,23 @@ class HeroesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
-
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(resetPressed))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Map", style: .plain, target: self, action: #selector(mapTapped))
+        
         initViews()
         setObservers()
         viewModel?.onViewAppear()
+    }
+    
+    @objc func resetPressed() {
+        viewModel?.onResetPressed()
+    }
+    @objc func mapTapped() {
+        performSegue(
+            withIdentifier: "HEROES_TO_MAP",
+            sender: nil
+        )
     }
     
     // MARK: - Private functions -

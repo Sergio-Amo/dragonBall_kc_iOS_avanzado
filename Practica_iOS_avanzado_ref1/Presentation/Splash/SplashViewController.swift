@@ -39,7 +39,7 @@ final class SplashViewController: UIViewController {
     // Remove navigation bar
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        //navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
