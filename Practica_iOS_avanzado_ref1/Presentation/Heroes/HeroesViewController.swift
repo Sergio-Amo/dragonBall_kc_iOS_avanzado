@@ -7,26 +7,95 @@
 
 import UIKit
 
-class HeroesViewController: UIViewController {
+// MARK: - View State -
+enum HeroesViewState {
+    case loading(_ isLoading: Bool)
+    case updateData
+}
 
+// MARK: - View Protocol -
+protocol HeroesViewControllerDelegate {
+    var viewState: ((HeroesViewState) -> Void)? { get set }
+    var heroesCount: Int { get }
+    
+    func onViewAppear()
+    func heroAt(index: Int) -> Hero?
+    //func heroDetailViewModel(for index: Int) -> HeroDetailViewControllerDelegate?
+}
+
+class HeroesViewController: UIViewController {
+    // MARK: - Constants -
+    private let estimatedHeight: CGFloat = 256
+    // MARK: - IBOutlet -
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingView: UIView!
 
+    // MARK: - Public Properties -
+    var viewModel: HeroesViewControllerDelegate?
+
+    // MARK: - Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.hidesBackButton = true
 
-        // Do any additional setup after loading the view.
+        initViews()
+        setObservers()
+        viewModel?.onViewAppear()
     }
     
+    // MARK: - Private functions -
+    private func initViews() {
+        tableView.register(UINib(nibName: HeroesTableViewCell.identifier, bundle: nil),
+                           forCellReuseIdentifier: HeroesTableViewCell.identifier)
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        tableView.delegate = self
+        tableView.dataSource = self
     }
-    */
 
+    private func setObservers() {
+        viewModel?.viewState = { [weak self] state in
+            DispatchQueue.main.async {
+                switch state {
+                    case .loading(let isLoading):
+                        self?.loadingView.isHidden = !isLoading
+
+                    case .updateData:
+                        self?.tableView.reloadData()
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Extension TableView -
+extension HeroesViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel?.heroesCount ?? 0
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        self.estimatedHeight
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: HeroesTableViewCell.identifier,
+            for: indexPath) as? HeroesTableViewCell else
+        {
+            return UITableViewCell()
+        }
+
+        if let hero = viewModel?.heroAt(index: indexPath.row) {
+            cell.updateViews(data: hero)
+        }
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /*performSegue(
+            withIdentifier: "HEROES_TO_HERO_DETAIL",
+            sender: indexPath
+        )*/
+    }
 }

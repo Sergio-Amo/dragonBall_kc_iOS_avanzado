@@ -13,6 +13,9 @@ final class LoginViewModel: LoginViewControllerDelegate {
 
     // MARK: - Properties -
     var viewState: ((LoginViewState) -> Void)?
+    var heroesViewModel: HeroesViewControllerDelegate {
+        HeroesViewModel(networkApi: networkApi)
+    }
 
     // MARK: - Initializers -
     init(networkApi: NetworkApiProtocol) {

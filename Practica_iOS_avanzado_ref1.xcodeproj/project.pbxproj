@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2725B0142AED5EDC00C880ED /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0132AED5EDC00C880ED /* Hero.swift */; };
+		2725B0162AED69BF00C880ED /* HeroLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0152AED69BF00C880ED /* HeroLocation.swift */; };
+		2725B01A2AED6D3400C880ED /* HeroDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0192AED6D3400C880ED /* HeroDAO.swift */; };
+		2725B01C2AED6E9800C880ED /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B01B2AED6E9800C880ED /* CoreDataStack.swift */; };
 		27CD84A42AED091800344B3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CD84A32AED091800344B3E /* AppDelegate.swift */; };
 		27CD84A62AED091800344B3E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CD84A52AED091800344B3E /* SceneDelegate.swift */; };
 		27CD84A82AED091800344B3E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CD84A72AED091800344B3E /* SplashViewController.swift */; };
@@ -50,6 +54,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2725B0132AED5EDC00C880ED /* Hero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
+		2725B0152AED69BF00C880ED /* HeroLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroLocation.swift; sourceTree = "<group>"; };
+		2725B0192AED6D3400C880ED /* HeroDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDAO.swift; sourceTree = "<group>"; };
+		2725B01B2AED6E9800C880ED /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		27CD84A02AED091800344B3E /* Practica_iOS_avanzado_ref1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Practica_iOS_avanzado_ref1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27CD84A32AED091800344B3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27CD84A52AED091800344B3E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +112,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2725B0112AED5EC300C880ED /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				2725B0122AED5ECF00C880ED /* Models */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		2725B0122AED5ECF00C880ED /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2725B0132AED5EDC00C880ED /* Hero.swift */,
+				2725B0152AED69BF00C880ED /* HeroLocation.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2725B0182AED6D2300C880ED /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2725B0192AED6D3400C880ED /* HeroDAO.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		27CD84972AED091800344B3E = {
 			isa = PBXGroup;
 			children = (
@@ -127,13 +160,13 @@
 		27CD84A22AED091800344B3E /* Practica_iOS_avanzado_ref1 */ = {
 			isa = PBXGroup;
 			children = (
-				27CD84E22AED1A2A00344B3E /* Data */,
-				27CD84B42AED091900344B3E /* Info.plist */,
 				27CD84A32AED091800344B3E /* AppDelegate.swift */,
 				27CD84A52AED091800344B3E /* SceneDelegate.swift */,
+				27CD84B42AED091900344B3E /* Info.plist */,
+				2725B0112AED5EC300C880ED /* Domain */,
+				27CD84E22AED1A2A00344B3E /* Data */,
 				27CD84D82AED146500344B3E /* Resources */,
 				27CD84EA2AED26BD00344B3E /* Presentation */,
-				27CD84AC2AED091800344B3E /* Practica_iOS_avanzado_ref1.xcdatamodeld */,
 			);
 			path = Practica_iOS_avanzado_ref1;
 			sourceTree = "<group>";
@@ -193,7 +226,10 @@
 		27CD84E32AED1A2F00344B3E /* Local */ = {
 			isa = PBXGroup;
 			children = (
+				2725B0182AED6D2300C880ED /* Models */,
+				27CD84AC2AED091800344B3E /* Practica_iOS_avanzado_ref1.xcdatamodeld */,
 				27CD84E42AED1A5100344B3E /* VaultApi.swift */,
+				2725B01B2AED6E9800C880ED /* CoreDataStack.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -389,17 +425,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2725B0162AED69BF00C880ED /* HeroLocation.swift in Sources */,
 				27CD84DB2AED184100344B3E /* SplashViewModel.swift in Sources */,
 				27CD84FE2AED417D00344B3E /* HeroesTableViewCell.swift in Sources */,
 				27CD84E52AED1A5100344B3E /* VaultApi.swift in Sources */,
 				27CD84AE2AED091800344B3E /* Practica_iOS_avanzado_ref1.xcdatamodeld in Sources */,
 				27CD84A82AED091800344B3E /* SplashViewController.swift in Sources */,
 				27CD84F82AED415300344B3E /* HeroesViewController.swift in Sources */,
+				2725B01C2AED6E9800C880ED /* CoreDataStack.swift in Sources */,
 				27CD84EF2AED294200344B3E /* LoginViewController.swift in Sources */,
 				27CD84A42AED091800344B3E /* AppDelegate.swift in Sources */,
+				2725B01A2AED6D3400C880ED /* HeroDAO.swift in Sources */,
 				27CD84E92AED1C3C00344B3E /* NetworkApi.swift in Sources */,
 				27CD84A62AED091800344B3E /* SceneDelegate.swift in Sources */,
 				27CD84F12AED295A00344B3E /* LoginViewModel.swift in Sources */,
+				2725B0142AED5EDC00C880ED /* Hero.swift in Sources */,
 				27CD84FA2AED416200344B3E /* HeroesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

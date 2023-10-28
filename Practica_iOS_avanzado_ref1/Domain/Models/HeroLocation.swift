@@ -7,4 +7,10 @@
 
 import Foundation
 
-
+struct HeroLocation: Codable {
+    let id: String?,
+        latitud: String?,
+        longitud: String?,
+        dateShow: String?,
+        hero: Hero?
+}

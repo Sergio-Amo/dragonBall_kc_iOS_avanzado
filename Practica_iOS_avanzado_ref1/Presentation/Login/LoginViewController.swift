@@ -11,6 +11,7 @@ import UIKit
 protocol LoginViewControllerDelegate {
     var viewState: ((LoginViewState) -> Void)? { get set }
     func onLoginPressed(email: String?, password: String?)
+    var heroesViewModel: HeroesViewControllerDelegate { get }
 }
 
 // MARK: - View State -
@@ -59,6 +60,13 @@ final class LoginViewController: UIViewController {
         userFieldError.layer.cornerRadius = 4
         userFieldError.layer.masksToBounds = false
         userFieldError.clipsToBounds = true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "LOGIN_TO_HEROES",
+           let heroesViewController = segue.destination as? HeroesViewController {
+            heroesViewController.viewModel = viewModel?.heroesViewModel
+        }
     }
     
     // MARK: - Private functions -

@@ -9,8 +9,8 @@ import Foundation
 
 protocol NetworkApiProtocol {
     func loginWith(user: String, password: String, completion: @escaping (Result<String, NetworkApi.NetworkError>) -> Void )
-    /*func getHeroes()
-    func getHeroLocations()
+    func getHeroes(_ heroName: String?, completion: ((Heroes) -> Void)?)
+    /*func getHeroLocations()
     func getAllHeroLocations()*/
     
 }
@@ -76,4 +76,50 @@ final class NetworkApi: NetworkApiProtocol {
             completion(.success(token))
         }.resume()
     }
+    
+    // TODO: TEMP
+    func getHeroes(_ heroName: String? = nil, completion: ((Heroes) -> Void)? = nil) {
+        guard let url = URL(string: "\(NetworkApi.apiBaseURL)\(Endpoint.heroes)"),
+              let token = vaultApi.getToken() else {
+            // TODO: Enviar notificación indicando el error
+            completion?([])
+            return
+        }
+
+        let jsonData: [String: Any] = ["name": heroName ?? ""]
+        let jsonParameters = try? JSONSerialization.data(withJSONObject: jsonData)
+
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        urlRequest.setValue("application/json; charset=utf-8",
+                            forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("Bearer \(token)",
+                            forHTTPHeaderField: "Authorization")
+        urlRequest.httpBody = jsonParameters
+
+        URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            guard error == nil else {
+                // TODO: Enviar notificación indicando el error
+                completion?([])
+                return
+            }
+
+            guard let data,
+                  (response as? HTTPURLResponse)?.statusCode == 200 else {
+                // TODO: Enviar notificación indicando response error
+                completion?([])
+                return
+            }
+
+            guard let heroes = try? JSONDecoder().decode([Hero].self, from: data) else {
+                // TODO: Enviar notificación indicando response vacío o error codificación
+                completion?([])
+                return
+            }
+
+            //print("API - Get Heroes: \(heroes)")
+            completion?(heroes)
+        }.resume()
+    }
+    
 }
