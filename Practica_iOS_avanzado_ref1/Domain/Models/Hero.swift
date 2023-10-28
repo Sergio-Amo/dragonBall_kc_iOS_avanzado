@@ -4,7 +4,7 @@
 //
 //  Created by Sergio Amo on 27/10/23.
 //
-/*
+
 import Foundation
 import CoreData
 
@@ -37,8 +37,8 @@ extension Hero: ManagedObjectConvertible {
         return object
     }
 }
-*/
 
+/*
 import Foundation
 import CoreData
 
@@ -87,3 +87,4 @@ extension Hero: ManagedObjectConvertible {
     }
 }
 
+*/

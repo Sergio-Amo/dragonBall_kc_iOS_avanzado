@@ -55,16 +55,25 @@ class HeroesViewModel: HeroesViewControllerDelegate {
 
             let managedObjectContext = CoreDataStack.shared.persistentContainer.viewContext
             
-            let heroesDAO = try? managedObjectContext.fetch(NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier))
+            var heroesDAO = try? managedObjectContext.fetch(NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier))
+            print(heroesDAO?.count as Any)
             if heroesDAO?.count == 0 {
                 heroes.forEach { $0.toManagedObject(in: managedObjectContext) }
                 try? managedObjectContext.save()
             }
             
+            heroesDAO = try? managedObjectContext.fetch(NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier))
             heroesDAO?.forEach({ heroDAO in
                 print("name: \(String(describing: heroDAO.name))")
             })
             print(heroesDAO?.count as Any)
+            
+            //remove coredata for testing
+            let fetchHeroes = NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier)
+            guard let heroesDAO = try? managedObjectContext.fetch(fetchHeroes) else { return }
+            heroesDAO.forEach { managedObjectContext.delete($0) }
+            try? managedObjectContext.save()
+            //end
             
             self.heroes = heroes
             self.viewState?(.loading(false))
