@@ -20,6 +20,16 @@ class HeroesTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         containerOutlet.layer.cornerRadius = 4.0
+        containerOutlet.layer.cornerRadius = 8.0
+        containerOutlet.layer.shadowColor = UIColor.systemGray.cgColor
+        containerOutlet.layer.shadowOffset = CGSize.zero
+        containerOutlet.layer.shadowRadius = 6.0
+        containerOutlet.layer.shadowOpacity = 0.6
+
+        imageOutlet.layer.cornerRadius = 8.0
+        imageOutlet.layer.maskedCorners = [.layerMinXMaxYCorner]
+
+        selectionStyle = .none
     }
     
     override func prepareForReuse() {
@@ -40,6 +50,7 @@ class HeroesTableViewCell: UITableViewCell {
     }
     private func update(photo: URL? = nil) {
         guard let photo else { return }
-        imageOutlet.kf.setImage(with: photo)
+        let finalUrl = photo.scheme == "http" ? photo.upgradeUrlScheme(photo) : photo
+        imageOutlet.kf.setImage(with: finalUrl)
     }
 }

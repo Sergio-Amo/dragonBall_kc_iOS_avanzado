@@ -61,6 +61,12 @@ class CoreDataStack: NSObject {
         })
         return container
     }()
+    
+    var heroDAOCount: Int? {
+        let context = persistentContainer.viewContext
+        let heroesDAO = try? context.fetch(NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier))
+        return heroesDAO?.count
+    }
 
     // MARK: - Core Data Saving support
     func saveContext () {
@@ -77,14 +83,20 @@ class CoreDataStack: NSObject {
         }
     }
     
-   /* func loadPersons() {
-        let fetchPerson = NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier)
+    func getHeroes() -> Heroes? {
         let context = persistentContainer.viewContext
-        guard let context,
-              let persons = try? moc.fetch(fetchPerson) else {
-            return
+        let heroesDAO = try? context.fetch(NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier))
+        guard let heroesDAO else {
+            return nil
         }
-
-        print("Persons: \(persons)")
-    }*/
+        return heroesDAO.compactMap { $0.toModel() }
+    }
+    
+    func removeHeroes() {
+        let context = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier)
+        guard let heroesDAO = try? context.fetch(fetchRequest) else { return }
+        heroesDAO.forEach { context.delete($0) }
+        try? context.save()
+    }
 }

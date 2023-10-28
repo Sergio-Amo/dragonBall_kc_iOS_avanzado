@@ -11,6 +11,7 @@
 		2725B0162AED69BF00C880ED /* HeroLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0152AED69BF00C880ED /* HeroLocation.swift */; };
 		2725B01A2AED6D3400C880ED /* HeroDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0192AED6D3400C880ED /* HeroDAO.swift */; };
 		2725B01C2AED6E9800C880ED /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B01B2AED6E9800C880ED /* CoreDataStack.swift */; };
+		279E55B32AEDC41200DCA2F7 /* Extension+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279E55B22AEDC41200DCA2F7 /* Extension+URL.swift */; };
 		27CD84A42AED091800344B3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CD84A32AED091800344B3E /* AppDelegate.swift */; };
 		27CD84A62AED091800344B3E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CD84A52AED091800344B3E /* SceneDelegate.swift */; };
 		27CD84A82AED091800344B3E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CD84A72AED091800344B3E /* SplashViewController.swift */; };
@@ -58,6 +59,7 @@
 		2725B0152AED69BF00C880ED /* HeroLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroLocation.swift; sourceTree = "<group>"; };
 		2725B0192AED6D3400C880ED /* HeroDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDAO.swift; sourceTree = "<group>"; };
 		2725B01B2AED6E9800C880ED /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		279E55B22AEDC41200DCA2F7 /* Extension+URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+URL.swift"; sourceTree = "<group>"; };
 		27CD84A02AED091800344B3E /* Practica_iOS_avanzado_ref1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Practica_iOS_avanzado_ref1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27CD84A32AED091800344B3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27CD84A52AED091800344B3E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		2725B0112AED5EC300C880ED /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				279E55B12AEDC3D400DCA2F7 /* Extensions */,
 				2725B0122AED5ECF00C880ED /* Models */,
 			);
 			path = Domain;
@@ -135,6 +138,14 @@
 				2725B0192AED6D3400C880ED /* HeroDAO.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		279E55B12AEDC3D400DCA2F7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				279E55B22AEDC41200DCA2F7 /* Extension+URL.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		27CD84972AED091800344B3E = {
@@ -427,6 +438,7 @@
 			files = (
 				2725B0162AED69BF00C880ED /* HeroLocation.swift in Sources */,
 				27CD84DB2AED184100344B3E /* SplashViewModel.swift in Sources */,
+				279E55B32AEDC41200DCA2F7 /* Extension+URL.swift in Sources */,
 				27CD84FE2AED417D00344B3E /* HeroesTableViewCell.swift in Sources */,
 				27CD84E52AED1A5100344B3E /* VaultApi.swift in Sources */,
 				27CD84AE2AED091800344B3E /* Practica_iOS_avanzado_ref1.xcdatamodeld in Sources */,

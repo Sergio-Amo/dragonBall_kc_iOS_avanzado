@@ -28,12 +28,8 @@ class HeroesViewModel: HeroesViewControllerDelegate {
     // MARK: - Public functions -
     func onViewAppear() {
         viewState?(.loading(true))
-        
-        DispatchQueue.global().async {
-            self.networkApi.getHeroes(nil) { heroes in
-                self.onHeroesReponse(heroes)
-            }
-        }
+        // Load heroes from local if possible
+        CoreDataStack.shared.heroDAOCount == 0 ? getHeroesRemote() : getHeroesLocal()
     }
 
     func heroAt(index: Int) -> Hero? {
@@ -48,33 +44,29 @@ class HeroesViewModel: HeroesViewControllerDelegate {
     }*/
 
     // MARK: - Private functions -
+    private func getHeroesRemote() {
+        DispatchQueue.global().async {
+            self.networkApi.getHeroes(nil) { heroes in
+                self.onHeroesReponse(heroes)
+            }
+        }
+    }
+    private func getHeroesLocal() {
+        DispatchQueue.main.async {
+            guard let heroes = CoreDataStack.shared.getHeroes() else { return }
+            self.onHeroesReponse(heroes)
+        }
+    }
+    
     private func onHeroesReponse(_ heroes: Heroes) {
         DispatchQueue.main.async {
-            
-            // Update Core Data
-
+            // Save heroes to coreData if there's no data stored
             let managedObjectContext = CoreDataStack.shared.persistentContainer.viewContext
-            
-            var heroesDAO = try? managedObjectContext.fetch(NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier))
-            print(heroesDAO?.count as Any)
-            if heroesDAO?.count == 0 {
+            if CoreDataStack.shared.heroDAOCount == 0 {
                 heroes.forEach { $0.toManagedObject(in: managedObjectContext) }
                 try? managedObjectContext.save()
             }
-            
-            heroesDAO = try? managedObjectContext.fetch(NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier))
-            heroesDAO?.forEach({ heroDAO in
-                print("name: \(String(describing: heroDAO.name))")
-            })
-            print(heroesDAO?.count as Any)
-            
-            //remove coredata for testing
-            let fetchHeroes = NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier)
-            guard let heroesDAO = try? managedObjectContext.fetch(fetchHeroes) else { return }
-            heroesDAO.forEach { managedObjectContext.delete($0) }
-            try? managedObjectContext.save()
-            //end
-            
+            // Update cell
             self.heroes = heroes
             self.viewState?(.loading(false))
             self.viewState?(.updateData)
