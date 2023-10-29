@@ -96,5 +96,13 @@ class CoreDataStack: NSObject {
         heroesDAO.forEach { context.delete($0) }
         try? context.save()
     }
+    
+    func getHeroLocations(id: String) -> HeroLocations? {
+        let context = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<HeroLocationDAO>(entityName: HeroLocationDAO.identifier)
+        fetchRequest.predicate = NSPredicate(format: "hero.id = %@", id)
+        let locations = try? context.fetch(fetchRequest)
+        return locations?.compactMap { $0.toModel() }
+    }
 }
 

@@ -19,7 +19,7 @@ class HeroLocationDAO: NSManagedObject {
 
 extension HeroLocationDAO: ModelConvertible {
     /// The managed entity name.
-    static var entityName = "HeroLocationDAO"
+    static var identifier = "HeroLocationDAO"
 
     // MARK: - ModelConvertible
     /// Converts a HeroDAO instance to a Hero instance.

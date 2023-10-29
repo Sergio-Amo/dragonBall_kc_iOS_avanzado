@@ -21,7 +21,7 @@ struct HeroLocation: Codable, Equatable {
 extension HeroLocation: ManagedObjectConvertible {
     @discardableResult
     func toManagedObject(in context: NSManagedObjectContext) -> HeroLocationDAO? {
-        let entityName = HeroLocationDAO.entityName
+        let entityName = HeroLocationDAO.identifier
         guard let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context) else {
             NSLog("Can't create entity \(entityName)")
             return nil
@@ -29,7 +29,7 @@ extension HeroLocation: ManagedObjectConvertible {
         
         let object = HeroLocationDAO.init(entity: entityDescription, insertInto: context)
         object.id = id
-        object.latitud = longitud
+        object.latitud = latitud
         object.longitud = longitud
         object.dateShow = dateShow
         object.hero = hero?.toManagedObject(in: context)

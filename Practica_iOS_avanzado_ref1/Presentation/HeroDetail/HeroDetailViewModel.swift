@@ -28,12 +28,30 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
         viewState?(.loading(true))
         // TODO: GetHeroLocation from getHeroLocationLocal fallback to  getHeroLocationRemote
         guard let id = self.hero.id else { return }
+        
+        guard let locations = CoreDataStack.shared.getHeroLocations(id:id),
+              !locations.isEmpty else {
+            print("Getting location from network...")
+            self.getHeroLocationRemote(id:id)
+            return
+        }
+        print("Getting location from CoreData...")
+        self.getHeroLocationResponse(locations: locations)
+    }
+    
+    // MARK: - Private functions -
+    private func getHeroLocationResponse(locations: HeroLocations) {
+        manageLocations(locations)
+        viewState?(.update(hero: self.hero, locations: self.locations))
+        viewState?(.loading(false))
+    }
+    
+    private func getHeroLocationRemote(id: String) {
         self.networkApi.getHeroLocations(id: id) { [weak self] result in
             switch result {
                 case let .success(locations):
-                    self?.manageLocations(locations)
-                    self?.viewState?(.update(hero: self?.hero, locations: self?.locations))
-                    self?.viewState?(.loading(false))
+                    self?.saveLocationsToLocal(locations)
+                    self?.getHeroLocationResponse(locations: locations)
                     break
                 case let .failure(error):
                     print("Error: \(error)")
@@ -42,13 +60,11 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
         }
     }
     
-    // MARK: - Private functions -
-    private func getHeroLocationLocal() {
-        
-    }
-    
-    private func getHeroLocationRemote() {
-        
+    private func saveLocationsToLocal(_ locations: HeroLocations) {
+        // Save locations to coreData if there's no data stored
+        let managedObjectContext = CoreDataStack.shared.persistentContainer.viewContext
+        locations.forEach{ $0.toManagedObject(in: managedObjectContext) }
+        try? managedObjectContext.save()
     }
     
     private func manageLocations(_ locations: HeroLocations) {
@@ -59,8 +75,8 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
             }
 
             return HeroAnnotation(
-                title: hero.name ?? "Location",
-                info: heroLocation.dateShow ?? "Top Secret",
+                title: hero.name ?? "unknown",
+                info: heroLocation.dateShow ?? "Not available",
                 coordinate: .init(latitude: latitude,
                                   longitude: longitude)
                 
