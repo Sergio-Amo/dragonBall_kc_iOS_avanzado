@@ -86,10 +86,7 @@ class CoreDataStack: NSObject {
     func getHeroes() -> Heroes? {
         let context = persistentContainer.viewContext
         let heroesDAO = try? context.fetch(NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier))
-        guard let heroesDAO else {
-            return nil
-        }
-        return heroesDAO.compactMap { $0.toModel() }
+        return heroesDAO?.compactMap { $0.toModel() }
     }
     
     func removeHeroes() {
@@ -100,3 +97,4 @@ class CoreDataStack: NSObject {
         try? context.save()
     }
 }
+
