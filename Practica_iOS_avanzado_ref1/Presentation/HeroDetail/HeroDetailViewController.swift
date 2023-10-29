@@ -12,7 +12,7 @@ import Kingfisher
 // MARK: - View State -
 enum HeroDetailViewState {
     case loading(_ isLoading: Bool)
-    case update(hero: Hero?, locations: [String])
+    case update(hero: Hero?, locations: HeroLocations)
 }
 
 // MARK: - Protocol -
@@ -44,7 +44,7 @@ final class HeroDetailViewController: UIViewController {
     
     // MARK: - Private functions -
     private func initViews() {
-        
+        mapOutlet.delegate = self
     }
     private func setObservers() {
         viewModel?.viewState = { [weak self] state in
@@ -54,17 +54,18 @@ final class HeroDetailViewController: UIViewController {
                         self?.loadingView.isHidden = !isLoading
                         break
                     case .update(let hero, let locations):
-                        self?.updateViews(hero: hero)
+                        self?.updateViews(hero: hero, heroLocations: locations)
                         break
                 }
             }
         }
     }
     
-    private func updateViews(hero: Hero?) {
+    private func updateViews(hero: Hero?, heroLocations: HeroLocations?) {
         update(title: hero?.name)
         update(description: hero?.description)
         update(photo: hero?.photo)
+        update(locations: heroLocations)
     }
     
     private func update(title: String? = nil) {
@@ -79,6 +80,10 @@ final class HeroDetailViewController: UIViewController {
         imageOutlet.kf.setImage(with: finalUrl)
     }
     
+    private func update(locations: HeroLocations?) {
+       // locations?.forEach { mapOutlet.addAnnotation($0) }
+    }
+    
     private func makeImageRound() {
         imageOutlet.layer.cornerRadius = imageOutlet.frame.width / 2
         imageOutlet.clipsToBounds = true
@@ -86,4 +91,38 @@ final class HeroDetailViewController: UIViewController {
         imageOutlet.layer.borderWidth = 3
         imageOutlet.layer.borderColor = UIColor.systemBackground.cgColor
     }
+}
+
+extension HeroDetailViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let identifier = "HeroAnnotation"
+        let annotationView = mapView.dequeueReusableAnnotationView(
+            withIdentifier: identifier
+        ) ?? MKAnnotationView(
+            annotation: annotation,
+            reuseIdentifier: identifier
+        )
+
+        annotationView.canShowCallout = true
+        if annotation is MKUserLocation {
+            return nil
+        } else if annotation is HeroAnnotation {
+            // Resize image
+            let pinImage = UIImage(named: "img_map_pin")
+            let size = CGSize(width: 30, height: 30)
+            UIGraphicsBeginImageContext(size)
+            pinImage!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+
+            annotationView.image = resizedImage
+            return annotationView
+        } else {
+            return nil
+        }
+    }
+
+    /*func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let heroAnnotation = view.annotation as? HeroAnnotation else { return }
+        coordinates.text = "Last coordinates: \(heroAnnotation.coordinate.latitude), \(heroAnnotation.coordinate.longitude)"
+    }*/
 }

@@ -10,6 +10,8 @@
 		271BF8BE2AEE6DCB001BF16D /* HeroDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 271BF8BD2AEE6DCB001BF16D /* HeroDetail.storyboard */; };
 		271BF8C02AEE6DE1001BF16D /* HeroDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271BF8BF2AEE6DE1001BF16D /* HeroDetailViewController.swift */; };
 		271BF8C22AEE6DF2001BF16D /* HeroDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271BF8C12AEE6DF2001BF16D /* HeroDetailViewModel.swift */; };
+		271BF8C52AEEB8B4001BF16D /* MapAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271BF8C42AEEB8B4001BF16D /* MapAnnotations.swift */; };
+		271BF8C72AEEBC71001BF16D /* HeroLocationDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271BF8C62AEEBC71001BF16D /* HeroLocationDAO.swift */; };
 		2725B0142AED5EDC00C880ED /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0132AED5EDC00C880ED /* Hero.swift */; };
 		2725B0162AED69BF00C880ED /* HeroLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0152AED69BF00C880ED /* HeroLocation.swift */; };
 		2725B01A2AED6D3400C880ED /* HeroDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0192AED6D3400C880ED /* HeroDAO.swift */; };
@@ -61,6 +63,8 @@
 		271BF8BD2AEE6DCB001BF16D /* HeroDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HeroDetail.storyboard; sourceTree = "<group>"; };
 		271BF8BF2AEE6DE1001BF16D /* HeroDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDetailViewController.swift; sourceTree = "<group>"; };
 		271BF8C12AEE6DF2001BF16D /* HeroDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDetailViewModel.swift; sourceTree = "<group>"; };
+		271BF8C42AEEB8B4001BF16D /* MapAnnotations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotations.swift; sourceTree = "<group>"; };
+		271BF8C62AEEBC71001BF16D /* HeroLocationDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroLocationDAO.swift; sourceTree = "<group>"; };
 		2725B0132AED5EDC00C880ED /* Hero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 		2725B0152AED69BF00C880ED /* HeroLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroLocation.swift; sourceTree = "<group>"; };
 		2725B0192AED6D3400C880ED /* HeroDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDAO.swift; sourceTree = "<group>"; };
@@ -123,6 +127,7 @@
 		271BF8BB2AEE6D8F001BF16D /* HeroDetail */ = {
 			isa = PBXGroup;
 			children = (
+				271BF8C32AEEB862001BF16D /* MapAnotations */,
 				271BF8BD2AEE6DCB001BF16D /* HeroDetail.storyboard */,
 				271BF8BF2AEE6DE1001BF16D /* HeroDetailViewController.swift */,
 				271BF8C12AEE6DF2001BF16D /* HeroDetailViewModel.swift */,
@@ -135,6 +140,14 @@
 			children = (
 			);
 			path = HeroesMap;
+			sourceTree = "<group>";
+		};
+		271BF8C32AEEB862001BF16D /* MapAnotations */ = {
+			isa = PBXGroup;
+			children = (
+				271BF8C42AEEB8B4001BF16D /* MapAnnotations.swift */,
+			);
+			path = MapAnotations;
 			sourceTree = "<group>";
 		};
 		2725B0112AED5EC300C880ED /* Domain */ = {
@@ -159,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				2725B0192AED6D3400C880ED /* HeroDAO.swift */,
+				271BF8C62AEEBC71001BF16D /* HeroLocationDAO.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -465,6 +479,7 @@
 				2725B0162AED69BF00C880ED /* HeroLocation.swift in Sources */,
 				27CD84DB2AED184100344B3E /* SplashViewModel.swift in Sources */,
 				279E55B32AEDC41200DCA2F7 /* Extension+URL.swift in Sources */,
+				271BF8C52AEEB8B4001BF16D /* MapAnnotations.swift in Sources */,
 				27CD84FE2AED417D00344B3E /* HeroesTableViewCell.swift in Sources */,
 				27CD84E52AED1A5100344B3E /* VaultApi.swift in Sources */,
 				27CD84AE2AED091800344B3E /* Practica_iOS_avanzado_ref1.xcdatamodeld in Sources */,
@@ -481,6 +496,7 @@
 				271BF8C22AEE6DF2001BF16D /* HeroDetailViewModel.swift in Sources */,
 				2725B0142AED5EDC00C880ED /* Hero.swift in Sources */,
 				27CD84FA2AED416200344B3E /* HeroesViewModel.swift in Sources */,
+				271BF8C72AEEBC71001BF16D /* HeroLocationDAO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

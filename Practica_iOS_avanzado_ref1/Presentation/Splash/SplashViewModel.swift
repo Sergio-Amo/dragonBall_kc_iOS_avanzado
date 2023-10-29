@@ -36,7 +36,7 @@ final class SplashViewModel: SplashViewControllerDelegate {
     // MARK: - Public functions -
     func onViewAppear() {
         viewState?(.loading(true))
-        DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(2)) { [weak self] in
+        DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
             self?.tokenExists == true ? self?.viewState?(.navigateToHeroes) : self?.viewState?(.navigateToLogin)
         }
     }

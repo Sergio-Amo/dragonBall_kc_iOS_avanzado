@@ -33,7 +33,8 @@ extension Hero: ManagedObjectConvertible {
         object.longDescription = description
         object.photo = photo?.absoluteString ?? nil
         object.favorite = favorite ?? false
-
+        object.locations = []
+        
         return object
     }
 }
