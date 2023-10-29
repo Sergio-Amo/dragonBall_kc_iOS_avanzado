@@ -18,6 +18,6 @@
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="latitud" optional="YES" attributeType="String"/>
         <attribute name="longitud" optional="YES" attributeType="String"/>
-        <relationship name="hero" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HeroDAO" inverseName="locations" inverseEntity="HeroDAO"/>
+        <relationship name="hero" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="HeroDAO" inverseName="locations" inverseEntity="HeroDAO"/>
     </entity>
 </model>
