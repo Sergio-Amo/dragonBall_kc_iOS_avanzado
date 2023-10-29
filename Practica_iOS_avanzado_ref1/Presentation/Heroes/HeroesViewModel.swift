@@ -46,11 +46,11 @@ class HeroesViewModel: HeroesViewControllerDelegate {
         return heroes[index]
     }
 
-   /* func heroDetailViewModel(for index: Int) -> HeroDetailViewControllerDelegate? {
-        guard let hero = heroBy(index: index) else { return nil }
-        return HeroDetailViewModel(apiProvider: apiProvider,
+    func heroDetailViewModel(for index: Int) -> HeroDetailViewControllerDelegate? {
+        guard let hero = heroAt(index: index) else { return nil }
+        return HeroDetailViewModel(networkApi: networkApi,
                                    hero: hero)
-    }*/
+    }
 
     // MARK: - Private functions -
     private func getHeroesRemote() {

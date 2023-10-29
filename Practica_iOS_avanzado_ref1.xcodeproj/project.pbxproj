@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		271BF8BE2AEE6DCB001BF16D /* HeroDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 271BF8BD2AEE6DCB001BF16D /* HeroDetail.storyboard */; };
+		271BF8C02AEE6DE1001BF16D /* HeroDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271BF8BF2AEE6DE1001BF16D /* HeroDetailViewController.swift */; };
+		271BF8C22AEE6DF2001BF16D /* HeroDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271BF8C12AEE6DF2001BF16D /* HeroDetailViewModel.swift */; };
 		2725B0142AED5EDC00C880ED /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0132AED5EDC00C880ED /* Hero.swift */; };
 		2725B0162AED69BF00C880ED /* HeroLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0152AED69BF00C880ED /* HeroLocation.swift */; };
 		2725B01A2AED6D3400C880ED /* HeroDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0192AED6D3400C880ED /* HeroDAO.swift */; };
@@ -55,6 +58,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		271BF8BD2AEE6DCB001BF16D /* HeroDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HeroDetail.storyboard; sourceTree = "<group>"; };
+		271BF8BF2AEE6DE1001BF16D /* HeroDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDetailViewController.swift; sourceTree = "<group>"; };
+		271BF8C12AEE6DF2001BF16D /* HeroDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDetailViewModel.swift; sourceTree = "<group>"; };
 		2725B0132AED5EDC00C880ED /* Hero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 		2725B0152AED69BF00C880ED /* HeroLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroLocation.swift; sourceTree = "<group>"; };
 		2725B0192AED6D3400C880ED /* HeroDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDAO.swift; sourceTree = "<group>"; };
@@ -114,6 +120,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		271BF8BB2AEE6D8F001BF16D /* HeroDetail */ = {
+			isa = PBXGroup;
+			children = (
+				271BF8BD2AEE6DCB001BF16D /* HeroDetail.storyboard */,
+				271BF8BF2AEE6DE1001BF16D /* HeroDetailViewController.swift */,
+				271BF8C12AEE6DF2001BF16D /* HeroDetailViewModel.swift */,
+			);
+			path = HeroDetail;
+			sourceTree = "<group>";
+		};
+		271BF8BC2AEE6DB4001BF16D /* HeroesMap */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HeroesMap;
+			sourceTree = "<group>";
+		};
 		2725B0112AED5EC300C880ED /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,6 +283,8 @@
 				27CD84D62AED144800344B3E /* Splash */,
 				27CD84EB2AED26D000344B3E /* Login */,
 				27CD84F42AED40F300344B3E /* Heroes */,
+				271BF8BB2AEE6D8F001BF16D /* HeroDetail */,
+				271BF8BC2AEE6DB4001BF16D /* HeroesMap */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -409,6 +434,7 @@
 				27CD84F32AED2E6C00344B3E /* Login.storyboard in Resources */,
 				27CD84FF2AED417D00344B3E /* HeroesTableViewCell.xib in Resources */,
 				27CD84B32AED091900344B3E /* LaunchScreen.storyboard in Resources */,
+				271BF8BE2AEE6DCB001BF16D /* HeroDetail.storyboard in Resources */,
 				27CD84B02AED091900344B3E /* Assets.xcassets in Resources */,
 				27CD84F62AED411A00344B3E /* Heroes.storyboard in Resources */,
 				27CD84AB2AED091800344B3E /* Splash.storyboard in Resources */,
@@ -451,6 +477,8 @@
 				27CD84E92AED1C3C00344B3E /* NetworkApi.swift in Sources */,
 				27CD84A62AED091800344B3E /* SceneDelegate.swift in Sources */,
 				27CD84F12AED295A00344B3E /* LoginViewModel.swift in Sources */,
+				271BF8C02AEE6DE1001BF16D /* HeroDetailViewController.swift in Sources */,
+				271BF8C22AEE6DF2001BF16D /* HeroDetailViewModel.swift in Sources */,
 				2725B0142AED5EDC00C880ED /* Hero.swift in Sources */,
 				27CD84FA2AED416200344B3E /* HeroesViewModel.swift in Sources */,
 			);

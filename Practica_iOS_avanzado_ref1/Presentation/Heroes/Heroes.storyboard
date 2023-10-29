@@ -51,11 +51,22 @@
                     <connections>
                         <outlet property="loadingView" destination="YVm-qe-b2R" id="HO1-PS-QlC"/>
                         <outlet property="tableView" destination="b5h-4O-Nej" id="G2i-zu-CJb"/>
+                        <segue destination="ufa-Ro-7Jy" kind="show" identifier="HEROES_TO_HERODETAIL" id="h49-51-HUh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="132" y="-34"/>
+        </scene>
+        <!--HeroDetail-->
+        <scene sceneID="pA0-bH-BDU">
+            <objects>
+                <viewControllerPlaceholder storyboardName="HeroDetail" id="ufa-Ro-7Jy" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="WX6-ym-lm9"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NqC-a7-26v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="836" y="-21"/>
         </scene>
     </scenes>
     <resources>
@@ -63,7 +74,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

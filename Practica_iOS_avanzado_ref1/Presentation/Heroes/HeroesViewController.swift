@@ -21,7 +21,7 @@ protocol HeroesViewControllerDelegate {
     func onResetPressed()
     func onViewAppear()
     func heroAt(index: Int) -> Hero?
-    //func heroDetailViewModel(for index: Int) -> HeroDetailViewControllerDelegate?
+    func heroDetailViewModel(for index: Int) -> HeroDetailViewControllerDelegate?
 }
 
 class HeroesViewController: UIViewController {
@@ -45,6 +45,18 @@ class HeroesViewController: UIViewController {
         initViews()
         setObservers()
         viewModel?.onViewAppear()
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "HEROES_TO_HERODETAIL",
+              let index = sender as? Int,
+              let heroeDetailViewController = segue.destination as? HeroDetailViewController,
+              let heroDetailViewModel = self.viewModel?.heroDetailViewModel(for: index) else {
+            return
+        }
+        heroeDetailViewController.viewModel = heroDetailViewModel
+
     }
     
     @objc func resetPressed() {
@@ -107,9 +119,9 @@ extension HeroesViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        /*performSegue(
-            withIdentifier: "HEROES_TO_HERO_DETAIL",
-            sender: indexPath
-        )*/
+        performSegue(
+            withIdentifier: "HEROES_TO_HERODETAIL",
+            sender: indexPath.row
+        )
     }
 }
