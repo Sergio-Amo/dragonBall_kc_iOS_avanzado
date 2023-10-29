@@ -85,7 +85,9 @@ class CoreDataStack: NSObject {
     
     func getHeroes() -> Heroes? {
         let context = persistentContainer.viewContext
-        let heroesDAO = try? context.fetch(NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier))
+        let fetchRequest = NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        let heroesDAO = try? context.fetch(fetchRequest)
         return heroesDAO?.compactMap { $0.toModel() }
     }
     

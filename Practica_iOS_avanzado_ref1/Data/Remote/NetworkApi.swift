@@ -121,8 +121,11 @@ final class NetworkApi: NetworkApiProtocol {
                 completion(.failure(.decodingFailed))
                 return
             }
-
-            completion(.success(heroes))
+            
+            completion(.success(heroes.sorted(by: {
+                $0.name ?? "zzz" < $1.name ?? "zzzz"
+            })))
+            //completion(.success(heroes))
         }.resume()
     }
     

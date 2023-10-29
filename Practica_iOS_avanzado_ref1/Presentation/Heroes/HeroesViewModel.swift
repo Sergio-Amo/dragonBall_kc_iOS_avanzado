@@ -54,8 +54,8 @@ class HeroesViewModel: HeroesViewControllerDelegate {
 
     // MARK: - Private functions -
     private func getHeroesRemote() {
-        DispatchQueue.global().async {
-            self.networkApi.getHeroes(nil) { [weak self] result in
+        DispatchQueue.global().async { [weak self] in
+            self?.networkApi.getHeroes(nil) { [weak self] result in
                 switch result {
                     case let .success(heroes):
                         self?.onHeroesReponse(heroes)
@@ -68,14 +68,14 @@ class HeroesViewModel: HeroesViewControllerDelegate {
         }
     }
     private func getHeroesLocal() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             guard let heroes = CoreDataStack.shared.getHeroes() else { return }
-            self.onHeroesReponse(heroes)
+            self?.onHeroesReponse(heroes)
         }
     }
     
     private func onHeroesReponse(_ heroes: Heroes) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             // Save heroes to coreData if there's no data stored
             let managedObjectContext = CoreDataStack.shared.persistentContainer.viewContext
             if CoreDataStack.shared.heroDAOCount == 0 {
@@ -83,9 +83,9 @@ class HeroesViewModel: HeroesViewControllerDelegate {
                 try? managedObjectContext.save()
             }
             // Update cell
-            self.heroes = heroes
-            self.viewState?(.loading(false))
-            self.viewState?(.updateData)
+            self?.heroes = heroes
+            self?.viewState?(.loading(false))
+            self?.viewState?(.updateData)
         }
     }
 }

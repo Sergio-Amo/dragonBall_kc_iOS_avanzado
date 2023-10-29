@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 class HeroDetailViewModel: HeroDetailViewControllerDelegate {
     // MARK: - Dependencies -
@@ -63,7 +64,14 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
     private func saveLocationsToLocal(_ locations: HeroLocations) {
         // Save locations to coreData if there's no data stored
         let managedObjectContext = CoreDataStack.shared.persistentContainer.viewContext
+        
+        
+        managedObjectContext.automaticallyMergesChangesFromParent = true
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        
+        
         locations.forEach{ $0.toManagedObject(in: managedObjectContext) }
+        // TODO: FIX THIS!
         try? managedObjectContext.save()
     }
     

@@ -7,6 +7,11 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="photo" optional="YES" attributeType="String"/>
         <relationship name="locations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="HeroLocationDAO" inverseName="hero" inverseEntity="HeroLocationDAO"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="HeroLocationDAO" representedClassName="HeroLocationDAO" syncable="YES">
         <attribute name="dateShow" optional="YES" attributeType="String"/>
