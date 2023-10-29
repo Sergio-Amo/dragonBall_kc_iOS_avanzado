@@ -55,10 +55,10 @@ class HeroesViewModel: HeroesViewControllerDelegate {
     // MARK: - Private functions -
     private func getHeroesRemote() {
         DispatchQueue.global().async {
-            self.networkApi.getHeroes(nil) { result in
+            self.networkApi.getHeroes(nil) { [weak self] result in
                 switch result {
                     case let .success(heroes):
-                        self.onHeroesReponse(heroes)
+                        self?.onHeroesReponse(heroes)
                         break
                     case let .failure(error):
                         print("Error: \(error)")

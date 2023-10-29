@@ -9,8 +9,8 @@ import Foundation
 
 protocol NetworkApiProtocol {// TODO: CLEAN
     func loginWith(user: String, password: String, completion: @escaping (Result<String, NetworkApi.NetworkError>) -> Void )
-    func getHeroes(_ heroName: String?, completion: @escaping (Result<Heroes, NetworkApi.NetworkError>) -> Void )//completion: ((Heroes) -> Void)?)
-    //func getHeroLocations(_ heroName: String?, completion: @escaping (Result<HeroLocations, NetworkApi.NetworkError>) -> Void )
+    func getHeroes(_ heroName: String?, completion: @escaping (Result<Heroes, NetworkApi.NetworkError>) -> Void )
+    func getHeroLocations(id: String?, completion: @escaping (Result<HeroLocations, NetworkApi.NetworkError>) -> Void )
     /*func getAllHeroLocations()*/
     
 }
@@ -116,7 +116,7 @@ final class NetworkApi: NetworkApiProtocol {
                 return
             }
 
-            guard let heroes = try? JSONDecoder().decode([Hero].self, from: data) else {
+            guard let heroes = try? JSONDecoder().decode(Heroes.self, from: data) else {
                 // TODO: Enviar notificación indicando response vacío o error codificación
                 completion(.failure(.decodingFailed))
                 return
@@ -126,14 +126,14 @@ final class NetworkApi: NetworkApiProtocol {
         }.resume()
     }
     
-  /*  func getHeroLocations(_ heroName: String?, completion: @escaping (Result<HeroLocations, NetworkApi.NetworkError>) -> Void ) {
-        guard let url = URL(string: "\(NetworkApi.apiBaseURL)\(Endpoint.heroes)"),
+    func getHeroLocations(id: String?, completion: @escaping (Result<HeroLocations, NetworkApi.NetworkError>) -> Void ) {
+        guard let url = URL(string: "\(NetworkApi.apiBaseURL)\(Endpoint.heroLocations)"),
               let token = vaultApi.getToken() else {
             completion(.failure(.noToken))
             return
         }
 
-        let jsonData: [String: Any] = ["name": heroName ?? ""]
+        let jsonData: [String: Any] = ["id": id ?? ""]
         let jsonParameters = try? JSONSerialization.data(withJSONObject: jsonData)
 
         var urlRequest = URLRequest(url: url)
@@ -164,15 +164,15 @@ final class NetworkApi: NetworkApiProtocol {
                 return
             }
 
-            guard let heroes = try? JSONDecoder().decode([Hero].self, from: data) else {
+            guard let heroLocations = try? JSONDecoder().decode(HeroLocations.self, from: data) else {
                 // TODO: Enviar notificación indicando response vacío o error codificación
                 completion(.failure(.decodingFailed))
                 return
             }
 
-            completion(.success(heroes))
+            completion(.success(heroLocations))
         }.resume()
-    }*/
+    }
 }
 
 

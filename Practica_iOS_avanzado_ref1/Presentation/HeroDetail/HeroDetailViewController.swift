@@ -12,7 +12,7 @@ import Kingfisher
 // MARK: - View State -
 enum HeroDetailViewState {
     case loading(_ isLoading: Bool)
-    case update(hero: Hero?, locations: HeroLocations)
+    case update(hero: Hero?, locations: [HeroAnnotation]?)
 }
 
 // MARK: - Protocol -
@@ -61,7 +61,7 @@ final class HeroDetailViewController: UIViewController {
         }
     }
     
-    private func updateViews(hero: Hero?, heroLocations: HeroLocations?) {
+    private func updateViews(hero: Hero?, heroLocations: [HeroAnnotation]?) {
         update(title: hero?.name)
         update(description: hero?.description)
         update(photo: hero?.photo)
@@ -80,8 +80,8 @@ final class HeroDetailViewController: UIViewController {
         imageOutlet.kf.setImage(with: finalUrl)
     }
     
-    private func update(locations: HeroLocations?) {
-       // locations?.forEach { mapOutlet.addAnnotation($0) }
+    private func update(locations: [HeroAnnotation]?) {
+        locations?.forEach { mapOutlet.addAnnotation($0) }
     }
     
     private func makeImageRound() {
@@ -94,35 +94,4 @@ final class HeroDetailViewController: UIViewController {
 }
 
 extension HeroDetailViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let identifier = "HeroAnnotation"
-        let annotationView = mapView.dequeueReusableAnnotationView(
-            withIdentifier: identifier
-        ) ?? MKAnnotationView(
-            annotation: annotation,
-            reuseIdentifier: identifier
-        )
-
-        annotationView.canShowCallout = true
-        if annotation is MKUserLocation {
-            return nil
-        } else if annotation is HeroAnnotation {
-            // Resize image
-            let pinImage = UIImage(named: "img_map_pin")
-            let size = CGSize(width: 30, height: 30)
-            UIGraphicsBeginImageContext(size)
-            pinImage!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-
-            annotationView.image = resizedImage
-            return annotationView
-        } else {
-            return nil
-        }
-    }
-
-    /*func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let heroAnnotation = view.annotation as? HeroAnnotation else { return }
-        coordinates.text = "Last coordinates: \(heroAnnotation.coordinate.latitude), \(heroAnnotation.coordinate.longitude)"
-    }*/
 }

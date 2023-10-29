@@ -15,6 +15,7 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
     var viewState: ((HeroDetailViewState) -> Void)?
     
     private var hero: Hero
+    private var locations: [HeroAnnotation] = []
     
     // MARK: - Initializers -
     init(networkApi: NetworkApiProtocol, hero: Hero ) {
@@ -25,12 +26,20 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
     // MARK: - Public functions -
     func onViewAppear() {
         viewState?(.loading(true))
-        
         // TODO: GetHeroLocation from getHeroLocationLocal fallback to  getHeroLocationRemote
-        
-        self.viewState?(.update(hero: self.hero, locations: []))
-        
-        viewState?(.loading(false))
+        guard let id = self.hero.id else { return }
+        self.networkApi.getHeroLocations(id: id) { [weak self] result in
+            switch result {
+                case let .success(locations):
+                    self?.manageLocations(locations)
+                    self?.viewState?(.update(hero: self?.hero, locations: self?.locations))
+                    self?.viewState?(.loading(false))
+                    break
+                case let .failure(error):
+                    print("Error: \(error)")
+                    break
+            }
+        }
     }
     
     // MARK: - Private functions -
@@ -41,4 +50,22 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
     private func getHeroLocationRemote() {
         
     }
+    
+    private func manageLocations(_ locations: HeroLocations) {
+        self.locations = locations.compactMap{ (heroLocation: HeroLocation) -> HeroAnnotation? in
+            guard let latitude = Double(heroLocation.latitud ?? ""),
+                  let longitude = Double(heroLocation.longitud ?? "") else {
+                return nil
+            }
+
+            return HeroAnnotation(
+                title: hero.name ?? "Location",
+                info: heroLocation.dateShow ?? "Top Secret",
+                coordinate: .init(latitude: latitude,
+                                  longitude: longitude)
+                
+            )
+        }
+    }
+    
 }
