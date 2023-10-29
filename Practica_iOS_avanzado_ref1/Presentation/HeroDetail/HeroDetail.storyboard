@@ -81,26 +81,45 @@
                                     <constraint firstAttribute="trailing" secondItem="Ikd-kb-0Mo" secondAttribute="trailing" id="god-dH-VsQ"/>
                                 </constraints>
                             </scrollView>
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DeI-Td-Gv3">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="xhe-vl-pY6">
+                                        <rect key="frame" x="178" y="407.66666666666669" width="37" height="37"/>
+                                        <color key="color" systemColor="systemOrangeColor"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="xhe-vl-pY6" firstAttribute="centerY" secondItem="DeI-Td-Gv3" secondAttribute="centerY" id="3cL-Nm-bcW"/>
+                                    <constraint firstItem="xhe-vl-pY6" firstAttribute="centerX" secondItem="DeI-Td-Gv3" secondAttribute="centerX" id="on3-BK-QqP"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eKa-bS-U4p"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="eKa-bS-U4p" firstAttribute="trailing" secondItem="DeI-Td-Gv3" secondAttribute="trailing" id="GJG-1J-ooh"/>
+                            <constraint firstItem="DeI-Td-Gv3" firstAttribute="leading" secondItem="eKa-bS-U4p" secondAttribute="leading" id="Ny7-3O-RGe"/>
                             <constraint firstAttribute="bottom" secondItem="hCT-Ko-f9t" secondAttribute="bottom" id="Uue-fL-8KL"/>
                             <constraint firstItem="hCT-Ko-f9t" firstAttribute="trailing" secondItem="eKa-bS-U4p" secondAttribute="trailing" id="bOc-m0-Nqe"/>
                             <constraint firstItem="hCT-Ko-f9t" firstAttribute="top" secondItem="eKa-bS-U4p" secondAttribute="top" id="dfQ-eG-0Lq"/>
+                            <constraint firstItem="DeI-Td-Gv3" firstAttribute="top" secondItem="lOb-hP-Trf" secondAttribute="top" id="dll-c1-fpr"/>
+                            <constraint firstAttribute="bottom" secondItem="DeI-Td-Gv3" secondAttribute="bottom" id="mEI-eC-PpH"/>
                             <constraint firstItem="hCT-Ko-f9t" firstAttribute="leading" secondItem="eKa-bS-U4p" secondAttribute="leading" id="vfw-UN-h8t"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="descriptionOutlet" destination="OU8-pi-Bg7" id="eDW-Q9-a7Y"/>
                         <outlet property="imageOutlet" destination="P2i-iF-wJ9" id="Hql-iH-Jid"/>
+                        <outlet property="loadingView" destination="DeI-Td-Gv3" id="e4C-xA-gae"/>
                         <outlet property="mapOutlet" destination="M7m-Tp-RP2" id="tfS-Nv-3xi"/>
                         <outlet property="tittleOutlet" destination="dMW-Sn-V7x" id="LfH-Om-GgV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="-34"/>
+            <point key="canvasLocation" x="130.53435114503816" y="-34.507042253521128"/>
         </scene>
     </scenes>
     <resources>
@@ -109,6 +128,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

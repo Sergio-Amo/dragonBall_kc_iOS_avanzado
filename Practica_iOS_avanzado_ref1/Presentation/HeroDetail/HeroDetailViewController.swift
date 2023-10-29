@@ -9,11 +9,13 @@ import UIKit
 import MapKit
 import Kingfisher
 
+// MARK: - View State -
 enum HeroDetailViewState {
     case loading(_ isLoading: Bool)
     case update(hero: Hero?, locations: [String])
 }
 
+// MARK: - Protocol -
 protocol HeroDetailViewControllerDelegate {
     var viewState: ((HeroDetailViewState) -> Void)? { get set }
     func onViewAppear()
@@ -26,9 +28,12 @@ final class HeroDetailViewController: UIViewController {
     @IBOutlet weak var mapOutlet: MKMapView!
     @IBOutlet weak var tittleOutlet: UILabel!
     @IBOutlet weak var descriptionOutlet: UITextView!
+    @IBOutlet weak var loadingView: UIView!
     
+    // MARK: - Public Properties -
     var viewModel: HeroDetailViewControllerDelegate?
     
+    // MARK: - Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
@@ -37,6 +42,7 @@ final class HeroDetailViewController: UIViewController {
         makeImageRound()
     }
     
+    // MARK: - Private functions -
     private func initViews() {
         
     }
@@ -45,6 +51,7 @@ final class HeroDetailViewController: UIViewController {
             DispatchQueue.main.async {
                 switch state {
                     case .loading(let isLoading):
+                        self?.loadingView.isHidden = !isLoading
                         break
                     case .update(let hero, let locations):
                         self?.updateViews(hero: hero)
@@ -79,15 +86,4 @@ final class HeroDetailViewController: UIViewController {
         imageOutlet.layer.borderWidth = 3
         imageOutlet.layer.borderColor = UIColor.systemBackground.cgColor
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

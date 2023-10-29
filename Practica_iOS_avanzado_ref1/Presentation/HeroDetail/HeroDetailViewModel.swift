@@ -29,6 +29,8 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
         // TODO: GetHeroLocation from getHeroLocationLocal fallback to  getHeroLocationRemote
         
         self.viewState?(.update(hero: self.hero, locations: []))
+        
+        viewState?(.loading(false))
     }
     
     // MARK: - Private functions -

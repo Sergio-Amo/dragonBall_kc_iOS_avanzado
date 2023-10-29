@@ -27,7 +27,7 @@ protocol HeroesViewControllerDelegate {
 class HeroesViewController: UIViewController {
     // MARK: - Constants -
     private let estimatedHeight: CGFloat = 256
-    // MARK: - IBOutlet -
+    // MARK: - IBOutlets -
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingView: UIView!
 
@@ -59,17 +59,18 @@ class HeroesViewController: UIViewController {
 
     }
     
-    @objc func resetPressed() {
+    // MARK: - Private functions -
+    @objc private func resetPressed() {
         viewModel?.onResetPressed()
     }
-    @objc func mapTapped() {
+    // Since there is no more logic to this I've decided not to send this through the viewModel
+    @objc private func mapTapped() {
         performSegue(
             withIdentifier: "HEROES_TO_MAP",
             sender: nil
         )
     }
     
-    // MARK: - Private functions -
     private func initViews() {
         tableView.register(UINib(nibName: HeroesTableViewCell.identifier, bundle: nil),
                            forCellReuseIdentifier: HeroesTableViewCell.identifier)
