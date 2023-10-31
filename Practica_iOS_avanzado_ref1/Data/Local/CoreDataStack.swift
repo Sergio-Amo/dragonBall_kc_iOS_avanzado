@@ -62,12 +62,6 @@ class CoreDataStack: NSObject {
         return container
     }()
     
-    var heroDAOCount: Int? {
-        let context = persistentContainer.viewContext
-        let heroesDAO = try? context.fetch(NSFetchRequest<HeroDAO>(entityName: HeroDAO.identifier))
-        return heroesDAO?.count
-    }
-
     // MARK: - Core Data Saving support
     func saveContext () {
         let context = persistentContainer.viewContext

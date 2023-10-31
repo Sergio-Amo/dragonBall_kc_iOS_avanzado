@@ -29,7 +29,9 @@ class HeroesViewModel: HeroesViewControllerDelegate {
     func onViewAppear() {
         viewState?(.loading(true))
         // Load heroes from local if possible
-        CoreDataStack.shared.heroDAOCount == 0 ? getHeroesRemote() : getHeroesLocal()
+        self.heroes = CoreDataStack.shared.getHeroes() ?? []
+        if !self.heroes.isEmpty { print("Getting heroes from CoreData...") }
+        self.heroes.isEmpty ? getHeroesRemote() : self.onHeroesReponse(self.heroes)
     }
     
     func onResetPressed() {
@@ -58,6 +60,12 @@ class HeroesViewModel: HeroesViewControllerDelegate {
             self?.networkApi.getHeroes(nil) { [weak self] result in
                 switch result {
                     case let .success(heroes):
+                        // Save heroes to coreData if there's no data stored
+                        let managedObjectContext = CoreDataStack.shared.persistentContainer.viewContext
+                        heroes.forEach { $0.toManagedObject(in: managedObjectContext) }
+                        try? managedObjectContext.save()
+                        //Call to the method that updates the view
+                        print("Getting heroes from Network...")
                         self?.onHeroesReponse(heroes)
                         break
                     case let .failure(error):
@@ -67,21 +75,9 @@ class HeroesViewModel: HeroesViewControllerDelegate {
             }
         }
     }
-    private func getHeroesLocal() {
-        DispatchQueue.main.async { [weak self] in
-            guard let heroes = CoreDataStack.shared.getHeroes() else { return }
-            self?.onHeroesReponse(heroes)
-        }
-    }
     
     private func onHeroesReponse(_ heroes: Heroes) {
         DispatchQueue.main.async { [weak self] in
-            // Save heroes to coreData if there's no data stored
-            let managedObjectContext = CoreDataStack.shared.persistentContainer.viewContext
-            if CoreDataStack.shared.heroDAOCount == 0 {
-                heroes.forEach { $0.toManagedObject(in: managedObjectContext) }
-                try? managedObjectContext.save()
-            }
             // Update cell
             self?.heroes = heroes
             self?.viewState?(.loading(false))
