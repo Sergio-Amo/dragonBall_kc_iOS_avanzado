@@ -39,8 +39,31 @@ class HeroesViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(resetPressed))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Map", style: .plain, target: self, action: #selector(mapTapped))
+        // Image only
+        /*navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
+            style: .plain, 
+            target: self,
+            action: #selector(resetTapped)
+        )*/
+        
+        // Text only
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Map", style: .plain, target: self, action: #selector(mapTapped))
+        
+        // Custom Image + title
+        let customMapButton: UIButton = UIButton(type: .system)
+        customMapButton.setImage(UIImage(systemName: "map"), for: .normal)
+        customMapButton.setTitle(" Mapa", for: .normal)
+        customMapButton.sizeToFit()
+        customMapButton.addTarget(self, action: #selector(mapTapped), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: customMapButton)
+        
+        let customLogoutButton: UIButton = UIButton(type: .system)
+        customLogoutButton.setImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"), for: .normal)
+        customLogoutButton.setTitle(" Salir", for: .normal)
+        customLogoutButton.sizeToFit()
+        customLogoutButton.addTarget(self, action: #selector(resetTapped), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: customLogoutButton)
         
         initViews()
         setObservers()
@@ -60,15 +83,15 @@ class HeroesViewController: UIViewController {
     }
     
     // MARK: - Private functions -
-    @objc private func resetPressed() {
+    @objc private func resetTapped() {
         viewModel?.onResetPressed()
     }
     // Since there is no more logic to this I've decided not to send this through the viewModel
     @objc private func mapTapped() {
-        performSegue(
+        /*performSegue(
             withIdentifier: "HEROES_TO_MAP",
             sender: nil
-        )
+        )*/
     }
     
     private func initViews() {
