@@ -63,7 +63,8 @@ class HeroesViewModel: HeroesViewControllerDelegate {
                         // Save heroes to coreData if there's no data stored
                         let managedObjectContext = CoreDataStack.shared.persistentContainer.viewContext
                         heroes.forEach { $0.toManagedObject(in: managedObjectContext) }
-                        try? managedObjectContext.save()
+                        CoreDataStack.shared.saveContext()
+                        
                         //Call to the method that updates the view
                         print("Getting heroes from Network...")
                         self?.onHeroesReponse(heroes)

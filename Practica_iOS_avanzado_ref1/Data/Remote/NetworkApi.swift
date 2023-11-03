@@ -117,7 +117,6 @@ final class NetworkApi: NetworkApiProtocol {
             }
 
             guard let heroes = try? JSONDecoder().decode(Heroes.self, from: data) else {
-                // TODO: Enviar notificación indicando response vacío o error codificación
                 completion(.failure(.decodingFailed))
                 return
             }
@@ -168,7 +167,6 @@ final class NetworkApi: NetworkApiProtocol {
             }
 
             guard let heroLocations = try? JSONDecoder().decode(HeroLocations.self, from: data) else {
-                // TODO: Enviar notificación indicando response vacío o error codificación
                 completion(.failure(.decodingFailed))
                 return
             }

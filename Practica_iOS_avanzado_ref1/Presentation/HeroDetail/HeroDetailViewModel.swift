@@ -27,7 +27,8 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
     // MARK: - Public functions -
     func onViewAppear() {
         viewState?(.loading(true))
-        // TODO: GetHeroLocation from getHeroLocationLocal fallback to  getHeroLocationRemote
+        // TODO: GetHeroLocation from getHeroLocationLocal fallback to getHeroLocationRemote
+        // TODO: Make all requests on viewModel INIT so it load while the view is painted.
         guard let id = self.hero.id else { return }
         
         guard let locations = CoreDataStack.shared.getHeroLocations(id:id),
@@ -66,7 +67,7 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
         let managedObjectContext = CoreDataStack.shared.persistentContainer.viewContext
         managedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         locations.forEach{ $0.toManagedObject(in: managedObjectContext) }
-        try? managedObjectContext.save()
+        CoreDataStack.shared.saveContext()
     }
     
     private func manageLocations(_ locations: HeroLocations) {
