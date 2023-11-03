@@ -96,6 +96,27 @@
                                     <constraint firstItem="7S5-dE-1qV" firstAttribute="centerY" secondItem="8X1-Jt-Nsn" secondAttribute="centerY" id="esX-hw-Qea"/>
                                 </constraints>
                             </view>
+                            <stackView opaque="NO" alpha="0.0" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="aC7-EU-UIi" userLabel="infoToast">
+                                <rect key="frame" x="32" y="846" width="329" height="114"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xx9-uG-QAA">
+                                        <rect key="frame" x="8" y="8" width="64" height="64"/>
+                                        <color key="tintColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="aoh-Ll-mHb"/>
+                                            <constraint firstAttribute="width" constant="64" id="vVS-eg-NOd"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsU-F7-1d8">
+                                        <rect key="frame" x="84" y="40" width="237" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" systemColor="systemBackgroundColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.22688874274177429" blue="0.17788617733941559" alpha="0.74768658073580996" colorSpace="custom" customColorSpace="sRGB"/>
+                                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cEI-1f-Z72"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -104,9 +125,12 @@
                             <constraint firstAttribute="bottom" secondItem="8X1-Jt-Nsn" secondAttribute="bottom" id="GWI-rJ-DBx"/>
                             <constraint firstItem="6u0-fh-Fze" firstAttribute="centerX" secondItem="4jk-Yi-SRW" secondAttribute="centerX" id="I44-Rh-Rzn"/>
                             <constraint firstItem="8X1-Jt-Nsn" firstAttribute="trailing" secondItem="cEI-1f-Z72" secondAttribute="trailing" id="LUC-B5-bHc"/>
+                            <constraint firstItem="aC7-EU-UIi" firstAttribute="leading" secondItem="cEI-1f-Z72" secondAttribute="leading" constant="32" id="Me3-Iy-Tvb"/>
                             <constraint firstItem="cEI-1f-Z72" firstAttribute="trailing" secondItem="6u0-fh-Fze" secondAttribute="trailing" constant="32" id="Usa-My-ITd"/>
                             <constraint firstItem="bCG-2x-QyY" firstAttribute="top" secondItem="4jk-Yi-SRW" secondAttribute="top" id="VJC-VJ-uB9"/>
+                            <constraint firstAttribute="bottom" secondItem="aC7-EU-UIi" secondAttribute="bottom" constant="-108" id="bVp-mw-8wy"/>
                             <constraint firstAttribute="bottom" secondItem="bCG-2x-QyY" secondAttribute="bottom" id="gJ8-Zh-rf0"/>
+                            <constraint firstAttribute="trailing" secondItem="aC7-EU-UIi" secondAttribute="trailing" constant="32" id="h7O-9C-JFF"/>
                             <constraint firstItem="6u0-fh-Fze" firstAttribute="leading" secondItem="cEI-1f-Z72" secondAttribute="leading" constant="32" id="jJ4-x5-dJ2"/>
                             <constraint firstItem="8X1-Jt-Nsn" firstAttribute="leading" secondItem="cEI-1f-Z72" secondAttribute="leading" id="jVs-aL-W2L"/>
                             <constraint firstItem="cEI-1f-Z72" firstAttribute="trailing" secondItem="bCG-2x-QyY" secondAttribute="trailing" id="mdH-vq-yoZ"/>
@@ -116,6 +140,10 @@
                     </view>
                     <connections>
                         <outlet property="filedsStackView" destination="6u0-fh-Fze" id="8la-uT-e9a"/>
+                        <outlet property="infoToastBottomConstraint" destination="bVp-mw-8wy" id="eeQ-Yl-uJb"/>
+                        <outlet property="infoToastImage" destination="Xx9-uG-QAA" id="8wW-PO-hol"/>
+                        <outlet property="infoToastLabel" destination="fsU-F7-1d8" id="4xR-Lx-hA9"/>
+                        <outlet property="infoToastView" destination="aC7-EU-UIi" id="BlY-qP-MjY"/>
                         <outlet property="loadingView" destination="8X1-Jt-Nsn" id="gl4-Id-esd"/>
                         <outlet property="passwordField" destination="qhl-Ph-r3Q" id="NFE-VK-dFQ"/>
                         <outlet property="passwordFieldError" destination="lI8-Zi-YB0" id="iXo-nV-8hV"/>

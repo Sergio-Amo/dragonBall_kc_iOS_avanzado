@@ -68,18 +68,23 @@ final class LoginViewModel: LoginViewControllerDelegate {
                     // Login succesful and token saved inside the vault.
                     self?.viewState?(.navigateToNext)
                 case let .failure(error):
-                    // TODO: popup error
-                    print("Error: \(error)")
                     // Remove isLoading
                     self?.viewState?(.loading(false))
-                    guard let statusCode = (error as? HTTPURLResponse)?.statusCode else {
+                    // Get statusCode
+                    guard case let .statusCode(statusCode) = error,
+                          let statusCode else {
                         return
                     }
-                    print(statusCode)
+                    // Show toast with error
+                    self?.viewState?(.showToast((
+                        image: "exclamationmark.circle",
+                        text: "Error \(statusCode): No se ha podido completar la operación")
+                    ))
+                    
                     // TODO: move this to the splash and add popup for errors
-                   /* if statusCode == 401 || statusCode == 403 {
-                        self?.vaultApi.removeToken()
-                    }*/
+                    /* if statusCode == 401 || statusCode == 403 {
+                     self?.vaultApi.removeToken()
+                     }*/
             }
         }
     }

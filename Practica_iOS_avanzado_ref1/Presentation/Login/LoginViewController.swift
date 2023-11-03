@@ -20,16 +20,26 @@ enum LoginViewState {
     case showErrorEmail(_ error: String?)
     case showErrorPassword(_ error: String?)
     case navigateToNext
+    case showToast(_ data: (image: String, text: String))
 }
 
 final class LoginViewController: UIViewController {
     // MARK: - IBOutlet -
+    // User
     @IBOutlet weak var userField: UITextField!
-    @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var userFieldError: UILabel!
+    // Password
+    @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var passwordFieldError: UILabel!
+    // Activity monitor view
     @IBOutlet weak var loadingView: UIView!
+    // User/Password StackView
     @IBOutlet weak var filedsStackView: UIStackView!
+    // Info Toast
+    @IBOutlet weak var infoToastView: UIStackView!
+    @IBOutlet weak var infoToastLabel: UILabel!
+    @IBOutlet weak var infoToastImage: UIImageView!
+    @IBOutlet weak var infoToastBottomConstraint: NSLayoutConstraint!
     
     // MARK: - IBAction -
     @IBAction func onLoginPressed() {
@@ -41,9 +51,11 @@ final class LoginViewController: UIViewController {
     // Hide error message when fields changes
     @IBAction func userFieldChanged(_ sender: Any) {
         hideErrorLabel(userFieldError)
+        hideToast()
     }
     @IBAction func passwordFieldChanged(_ sender: Any) {
         hideErrorLabel(passwordFieldError)
+        hideToast()
     }
 
     // MARK: - Public Properties -
@@ -60,6 +72,12 @@ final class LoginViewController: UIViewController {
         userFieldError.layer.cornerRadius = 4
         userFieldError.layer.masksToBounds = false
         userFieldError.clipsToBounds = true
+        
+        passwordFieldError.layer.cornerRadius = 4
+        passwordFieldError.layer.masksToBounds = false
+        passwordFieldError.clipsToBounds = true
+        
+        infoToastView.layer.cornerRadius = 12
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -74,15 +92,18 @@ final class LoginViewController: UIViewController {
         view.addGestureRecognizer(
             UITapGestureRecognizer(
                 target: self,
-                action: #selector(dismissKeyboard)
+                action: #selector(onUiTapped)
             )
         )
     }
 
-    @objc func dismissKeyboard() {
+    @objc func onUiTapped() {
+        // Dismiss keyboard
         view.endEditing(true)
+        // Dismiss toast
+        hideToast()
     }
-    
+    // TODO: include function to animate and show/hide labels
     private func hideErrorLabel(_ label: UILabel) {
         if label.isHidden { return }
         label.isHidden = true
@@ -106,6 +127,9 @@ final class LoginViewController: UIViewController {
                         self?.passwordFieldError.isHidden = (error == nil || error?.isEmpty == true)
                         self?.animateFieldsStack()
                         
+                    case .showToast(let data):
+                        self?.showToast(data)
+                        
                     case .navigateToNext:
                         self?.performSegue(withIdentifier: "LOGIN_TO_HEROES",
                                            sender: nil)
@@ -123,6 +147,35 @@ final class LoginViewController: UIViewController {
             initialSpringVelocity: 0.5
         ) { [weak self] in
             self?.filedsStackView.layoutIfNeeded()
+        }
+    }
+    
+    private func showToast(_ data: (image: String, text: String)) {
+        infoToastLabel.text = data.text
+        infoToastImage.image = UIImage(systemName: data.image)
+        infoToastBottomConstraint.constant = 64
+        UIView.animate(
+            withDuration: 0.8,
+            delay: 0.0,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 0.5
+        ) { [weak self] in
+            self?.infoToastView.alpha = 1.0
+            self?.view.layoutIfNeeded()
+        }
+    }
+    
+    private func hideToast() {
+        // Move down
+        infoToastBottomConstraint.constant = -108
+        UIView.animate(withDuration: 0.6) { [weak self] in
+            // Make transparent
+            self?.infoToastView.alpha = 0.0
+            self?.view.layoutIfNeeded()
+        } completion: { [weak self] _ in
+            // Reset fields for reuse
+            self?.infoToastLabel.text = ""
+            self?.infoToastImage.image = UIImage(systemName: "")
         }
     }
 }
