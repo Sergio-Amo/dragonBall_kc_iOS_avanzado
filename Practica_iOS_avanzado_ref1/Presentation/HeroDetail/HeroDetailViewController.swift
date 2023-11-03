@@ -81,6 +81,11 @@ final class HeroDetailViewController: UIViewController {
     }
     
     private func update(locations: [HeroAnnotation]?) {
+        // Center map to first annotation
+        if let location = locations?.first?.coordinate {
+            mapOutlet.centerCoordinate = location
+        }
+        // Add annotations
         locations?.forEach { mapOutlet.addAnnotation($0) }
     }
     

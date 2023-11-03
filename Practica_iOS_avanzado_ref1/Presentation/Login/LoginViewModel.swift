@@ -81,6 +81,8 @@ final class LoginViewModel: LoginViewControllerDelegate {
                         text: "Error \(statusCode): No se ha podido completar la operación")
                     ))
                     
+                    // TODO: AFTER LOGIN ERROR CHECK FOR LOCAL DATA AND OFFER TO NAVIGATE ON OFFLINE MODE
+                    
                     // TODO: move this to the splash and add popup for errors
                     /* if statusCode == 401 || statusCode == 403 {
                      self?.vaultApi.removeToken()
