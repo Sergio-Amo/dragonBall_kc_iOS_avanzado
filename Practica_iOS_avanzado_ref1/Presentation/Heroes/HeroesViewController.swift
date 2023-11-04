@@ -19,6 +19,7 @@ protocol HeroesViewControllerDelegate {
     var heroesCount: Int { get }
     
     func onResetPressed()
+    func filterHeroes(currentFilter: String)
     func onViewAppear()
     func heroAt(index: Int) -> Hero?
     func heroDetailViewModel(for index: Int) -> HeroDetailViewControllerDelegate?
@@ -27,10 +28,16 @@ protocol HeroesViewControllerDelegate {
 class HeroesViewController: UIViewController {
     // MARK: - Constants -
     private let estimatedHeight: CGFloat = 256
+    
+    // MARK: - Private vars -
+    private var searchIsHidden = true
+    
     // MARK: - IBOutlets -
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingView: UIView!
-
+    @IBOutlet weak var filterView: UIView!
+    @IBOutlet weak var filterField: UITextField!
+    
     // MARK: - Public Properties -
     var viewModel: HeroesViewControllerDelegate?
 
@@ -39,31 +46,29 @@ class HeroesViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         
-        // Image only
-        /*navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "rectangle.portrait.and.arrow.right"),
-            style: .plain, 
-            target: self,
-            action: #selector(resetTapped)
-        )*/
-        
-        // Text only
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Map", style: .plain, target: self, action: #selector(mapTapped))
-        
-        // Custom Image + title
-        let customMapButton: UIButton = UIButton(type: .system)
-        customMapButton.setImage(UIImage(systemName: "map"), for: .normal)
-        customMapButton.setTitle(" Mapa", for: .normal)
-        customMapButton.sizeToFit()
-        customMapButton.addTarget(self, action: #selector(mapTapped), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: customMapButton)
-        
+        // Custom Image + title UIBarButtonItem
+        // Exit button
         let customLogoutButton: UIButton = UIButton(type: .system)
         customLogoutButton.setImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"), for: .normal)
         customLogoutButton.setTitle(" Salir", for: .normal)
         customLogoutButton.sizeToFit()
         customLogoutButton.addTarget(self, action: #selector(resetTapped), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: customLogoutButton)
+        
+        // Map button
+        let customMapButton: UIButton = UIButton(type: .system)
+        customMapButton.setImage(UIImage(systemName: "map"), for: .normal)
+        customMapButton.setTitle(" Mapa", for: .normal)
+        customMapButton.sizeToFit()
+        customMapButton.addTarget(self, action: #selector(mapTapped), for: .touchUpInside)
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(customView: customMapButton)
+        let mapButton = UIBarButtonItem(customView: customMapButton)
+        
+        // Search button
+        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
+        
+        // Add the buttons
+        navigationItem.rightBarButtonItems = [searchButton, mapButton]
         
         initViews()
         setObservers()
@@ -83,17 +88,6 @@ class HeroesViewController: UIViewController {
     }
     
     // MARK: - Private functions -
-    @objc private func resetTapped() {
-        viewModel?.onResetPressed()
-    }
-    // Since there is no more logic to this I've decided not to send this through the viewModel
-    @objc private func mapTapped() {
-        /*performSegue(
-            withIdentifier: "HEROES_TO_MAP",
-            sender: nil
-        )*/
-    }
-    
     private func initViews() {
         tableView.register(UINib(nibName: HeroesTableViewCell.identifier, bundle: nil),
                            forCellReuseIdentifier: HeroesTableViewCell.identifier)
@@ -134,12 +128,21 @@ extension HeroesViewController: UITableViewDataSource, UITableViewDelegate {
         {
             return UITableViewCell()
         }
-
+        
         if let hero = viewModel?.heroAt(index: indexPath.row) {
             cell.updateViews(data: hero)
         }
-
+        
         return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // My idea was to add this on the cellForRowAt above so it triggers less frequently
+        // but filtering also triggers a table update therefore hidding the search bar
+        // didScroll also triggers when the table was scrolled down before filtering (jumps up to 0.0)
+        // that's why I check for .zero position on Y
+        if searchIsHidden || scrollView.contentOffset.y == .zero { return }
+        if !searchIsHidden { showSearch(shouldHide: true) }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -147,5 +150,50 @@ extension HeroesViewController: UITableViewDataSource, UITableViewDelegate {
             withIdentifier: "HEROES_TO_HERODETAIL",
             sender: indexPath.row
         )
+    }
+}
+
+// Actions
+extension HeroesViewController {
+    // LogOut / Remove data functionality
+    @objc private func resetTapped() {
+        viewModel?.onResetPressed()
+    }
+    
+    // TODO: Navigate to HeroesMap
+    @objc private func mapTapped() {
+        /*performSegue(
+            withIdentifier: "HEROES_TO_MAP",
+            sender: nil
+        )*/
+    }
+    // Show/Hide Search Bar
+    @objc private func searchTapped() {
+        // Toggle searchBar
+        showSearch(shouldHide: !searchIsHidden)
+    }
+    private func showSearch(shouldHide: Bool) {
+        if searchIsHidden == shouldHide { return }
+        searchIsHidden = shouldHide
+        
+        filterView.isHidden = shouldHide
+        
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            usingSpringWithDamping: 0.8,
+            initialSpringVelocity: 0.5
+        ) { [weak self] in
+            self?.filterView.alpha = shouldHide == true ? 0 : 1
+            self?.view.layoutIfNeeded()
+        }
+        
+        !shouldHide ? filterField.becomeFirstResponder() : filterField.resignFirstResponder()
+    }
+    // OnFilter
+    @IBAction func onFilter(_ sender: Any) {
+        if let currentFilter = filterField.text {
+            viewModel?.filterHeroes(currentFilter: currentFilter)
+        }
     }
 }

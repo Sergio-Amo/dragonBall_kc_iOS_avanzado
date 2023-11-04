@@ -15,10 +15,12 @@ class HeroesViewModel: HeroesViewControllerDelegate {
     // MARK: - Properties -
     var viewState: ((HeroesViewState) -> Void)?
     var heroesCount: Int {
-        heroes.count
+        filteredHeroes.count
     }
 
     private var heroes: Heroes = []
+    private var filteredHeroes: Heroes = []
+    private var lastFilter: String = ""
 
     // MARK: - Initializers -
     init(networkApi: NetworkApiProtocol) {
@@ -45,13 +47,48 @@ class HeroesViewModel: HeroesViewControllerDelegate {
 
     func heroAt(index: Int) -> Hero? {
         guard index < heroesCount else { return nil }
-        return heroes[index]
+        return filteredHeroes[index]
     }
 
     func heroDetailViewModel(for index: Int) -> HeroDetailViewControllerDelegate? {
         guard let hero = heroAt(index: index) else { return nil }
         return HeroDetailViewModel(networkApi: networkApi,
                                    hero: hero)
+    }
+    
+    func filterHeroes(currentFilter: String) {
+        
+        // Update the table and lastFilter value
+        defer {
+            lastFilter = currentFilter
+            viewState?(.updateData)
+        }
+        // A character was appended to the lastFilter (except is lastFilter is empty)
+        // Easy performance optimization use it to filter over the already filtered list instead
+        // of filtering over the whole heroes list.
+        // In case there was a too big list you can additionally add a currentFilter.count limit of
+        // 2-3 characters as to not use a too short filter that may hurt performance
+        
+        let filter = try? Regex(currentFilter).ignoresCase()
+        
+        if !lastFilter.isEmpty
+            && currentFilter.count > lastFilter.count
+            && currentFilter.starts(with: lastFilter)
+            , let filter {
+            
+            // Filter over already filtered list
+            filteredHeroes = filteredHeroes.filter{ $0.name?.contains(filter) ?? false }
+            
+        } else if currentFilter.isEmpty {
+            
+            // Just go back to the all heroes list
+            filteredHeroes = heroes
+            
+        } else if let filter {
+            
+            // Filter over all heroes list
+            filteredHeroes = heroes.filter{ $0.name?.contains(filter) ?? false }
+        }
     }
 
     // MARK: - Private functions -
@@ -80,9 +117,11 @@ class HeroesViewModel: HeroesViewControllerDelegate {
     private func onHeroesReponse(_ heroes: Heroes) {
         DispatchQueue.main.async { [weak self] in
             // Update cell
+            self?.filteredHeroes = heroes
             self?.heroes = heroes
             self?.viewState?(.loading(false))
             self?.viewState?(.updateData)
         }
     }
+    
 }

@@ -16,10 +16,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="b5h-4O-Nej">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5zk-js-9Xb" userLabel="tableViewStack">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </tableView>
+                                <subviews>
+                                    <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="92m-UT-E7P" userLabel="FilterView">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                        <subviews>
+                                            <stackView clipsSubviews="YES" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Gh4-Ny-bQa" userLabel="HFilterStackView">
+                                                <rect key="frame" x="16" y="0.0" width="361" height="44"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="s5i-Qw-zTb">
+                                                        <rect key="frame" x="0.0" y="0.99999999999999645" width="20.333333333333332" height="42.333333333333329"/>
+                                                    </imageView>
+                                                    <textField clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Filtrar..." textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="ZP9-Gd-8X5">
+                                                        <rect key="frame" x="32.333333333333343" y="0.0" width="328.66666666666663" height="44"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <action selector="onFilter:" destination="Y6W-OH-hqX" eventType="editingChanged" id="rYY-Su-mS0"/>
+                                                        </connections>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Gh4-Ny-bQa" secondAttribute="trailing" constant="16" id="CSJ-S9-kPa"/>
+                                            <constraint firstItem="Gh4-Ny-bQa" firstAttribute="top" secondItem="92m-UT-E7P" secondAttribute="top" id="FDb-oW-V0X"/>
+                                            <constraint firstAttribute="bottom" secondItem="Gh4-Ny-bQa" secondAttribute="bottom" id="gAG-2V-fup"/>
+                                            <constraint firstItem="Gh4-Ny-bQa" firstAttribute="leading" secondItem="92m-UT-E7P" secondAttribute="leading" constant="16" id="mYT-lb-NJB"/>
+                                            <constraint firstAttribute="height" constant="44" id="v6X-vV-WPF"/>
+                                        </constraints>
+                                    </view>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="b5h-4O-Nej">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </tableView>
+                                </subviews>
+                            </stackView>
                             <view opaque="NO" alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YVm-qe-b2R" userLabel="LoadingView">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
@@ -30,25 +64,27 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="Rke-1Z-h9v" firstAttribute="centerX" secondItem="YVm-qe-b2R" secondAttribute="centerX" id="Zde-Cb-9UL"/>
-                                    <constraint firstItem="Rke-1Z-h9v" firstAttribute="centerY" secondItem="YVm-qe-b2R" secondAttribute="centerY" id="fRm-eH-aEb"/>
+                                    <constraint firstItem="Rke-1Z-h9v" firstAttribute="centerX" secondItem="YVm-qe-b2R" secondAttribute="centerX" id="RI2-x0-7wo"/>
+                                    <constraint firstItem="Rke-1Z-h9v" firstAttribute="centerY" secondItem="YVm-qe-b2R" secondAttribute="centerY" id="lEU-iR-bQW"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="b5h-4O-Nej" secondAttribute="bottom" id="BpO-Gl-9u8"/>
-                            <constraint firstItem="YVm-qe-b2R" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="FRs-E0-J3x"/>
-                            <constraint firstAttribute="bottom" secondItem="YVm-qe-b2R" secondAttribute="bottom" id="Uaf-W5-gCk"/>
-                            <constraint firstItem="b5h-4O-Nej" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="hOw-QW-oi0"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="b5h-4O-Nej" secondAttribute="trailing" id="qR2-Ql-Mp7"/>
-                            <constraint firstItem="YVm-qe-b2R" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="qm9-GR-ign"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="YVm-qe-b2R" secondAttribute="trailing" id="rNw-HZ-sqG"/>
-                            <constraint firstItem="b5h-4O-Nej" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="yEb-CY-ayE"/>
+                            <constraint firstItem="YVm-qe-b2R" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="1Gj-It-98f"/>
+                            <constraint firstItem="5zk-js-9Xb" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="6Ko-Yd-Gh7"/>
+                            <constraint firstItem="5zk-js-9Xb" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="9AN-gO-VTu"/>
+                            <constraint firstAttribute="trailing" secondItem="5zk-js-9Xb" secondAttribute="trailing" id="Hvj-4L-o7d"/>
+                            <constraint firstAttribute="bottom" secondItem="YVm-qe-b2R" secondAttribute="bottom" id="Iju-FE-bnf"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="5zk-js-9Xb" secondAttribute="bottom" id="KwH-qy-Us6"/>
+                            <constraint firstItem="YVm-qe-b2R" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="dot-DA-vHM"/>
+                            <constraint firstItem="YVm-qe-b2R" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="jDN-vJ-p2o"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="filterField" destination="ZP9-Gd-8X5" id="LQv-tD-FzA"/>
+                        <outlet property="filterView" destination="92m-UT-E7P" id="COx-xD-Vh6"/>
                         <outlet property="loadingView" destination="YVm-qe-b2R" id="HO1-PS-QlC"/>
                         <outlet property="tableView" destination="b5h-4O-Nej" id="G2i-zu-CJb"/>
                         <segue destination="ufa-Ro-7Jy" kind="show" identifier="HEROES_TO_HERODETAIL" id="h49-51-HUh"/>
@@ -56,7 +92,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="-34"/>
+            <point key="canvasLocation" x="130.53435114503816" y="-34.507042253521128"/>
         </scene>
         <!--HeroDetail-->
         <scene sceneID="pA0-bH-BDU">
@@ -70,11 +106,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

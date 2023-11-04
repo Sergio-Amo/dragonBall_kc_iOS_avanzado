@@ -5,6 +5,7 @@
 //  Created by Sergio Amo on 25/10/23.
 //
 
+// TODO: move stuff to extensions IN ALL FILES!
 import UIKit
 
 // MARK: - View Protocol -
