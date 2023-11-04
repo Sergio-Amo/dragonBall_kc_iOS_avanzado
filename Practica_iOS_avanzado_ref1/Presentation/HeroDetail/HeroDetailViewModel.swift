@@ -70,6 +70,7 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
         CoreDataStack.shared.saveContext()
     }
     
+    // Sort locations by dateShow
     private func sortHeroLocationsByDate(locations: HeroLocations) -> HeroLocations {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
