@@ -81,9 +81,9 @@ final class HeroDetailViewController: UIViewController {
     }
     
     private func update(locations: [HeroAnnotation]?) {
-        // Center map to first annotation (they came ordered by date, most recent first)
-        if let location = locations?.first?.coordinate {
-            mapOutlet.centerCoordinate = location
+        // Center map to first valid location (they came ordered by date, most recents first)
+        if let lastValidCoordinate = locations?.first(where: { CLLocationCoordinate2DIsValid($0.coordinate) }) {
+            mapOutlet.centerCoordinate = lastValidCoordinate.coordinate
         }
         // Add annotations
         locations?.forEach { mapOutlet.addAnnotation($0) }
