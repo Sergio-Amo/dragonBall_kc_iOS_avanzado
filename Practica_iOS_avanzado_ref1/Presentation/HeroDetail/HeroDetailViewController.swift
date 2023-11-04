@@ -80,13 +80,21 @@ final class HeroDetailViewController: UIViewController {
         imageOutlet.kf.setImage(with: finalUrl)
     }
     
+    // Center map to first valid location (they came ordered by date, most recent first)
     private func update(locations: [HeroAnnotation]?) {
-        // Center map to first valid location (they came ordered by date, most recents first)
-        if let lastValidCoordinate = locations?.first(where: { CLLocationCoordinate2DIsValid($0.coordinate) }) {
-            mapOutlet.centerCoordinate = lastValidCoordinate.coordinate
+        // Validate coordinates
+        let lastValidlocations = locations?.compactMap({
+            if CLLocationCoordinate2DIsValid($0.coordinate) {
+                return $0
+            }
+            return nil
+        })
+        // Center map to first valid coordinate
+        if let location = lastValidlocations?.first?.coordinate {
+            mapOutlet.centerCoordinate = location
         }
         // Add annotations
-        locations?.forEach { mapOutlet.addAnnotation($0) }
+        lastValidlocations?.forEach { mapOutlet.addAnnotation($0) }
     }
     
     private func makeImageRound() {
