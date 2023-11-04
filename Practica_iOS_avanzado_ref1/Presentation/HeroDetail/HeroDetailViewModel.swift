@@ -70,21 +70,33 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
         CoreDataStack.shared.saveContext()
     }
     
-    private func manageLocations(_ locations: HeroLocations) {
-        self.locations = locations.compactMap{ (heroLocation: HeroLocation) -> HeroAnnotation? in
-            guard let latitude = Double(heroLocation.latitud ?? ""),
-                  let longitude = Double(heroLocation.longitud ?? "") else {
-                return nil
+    private func sortHeroLocationsByDate(locations: HeroLocations) -> HeroLocations {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        return locations.sorted(by: { first, second in
+            if let str1 = first.dateShow, let str2 = second.dateShow,
+               let date1 = dateFormatter.date(from: str1),
+               let date2 = dateFormatter.date(from: str2) {
+                return date1 > date2
             }
-
-            return HeroAnnotation(
-                title: hero.name ?? "unknown",
-                info: heroLocation.dateShow ?? "Not available",
-                coordinate: .init(latitude: latitude,
-                                  longitude: longitude)
-                
-            )
-        }
+            return true
+        })
     }
     
+    private func manageLocations(_ locations: HeroLocations) {
+        self.locations = sortHeroLocationsByDate(locations: locations)
+            .compactMap{ (heroLocation: HeroLocation) -> HeroAnnotation? in
+                guard let latitude = Double(heroLocation.latitud ?? ""),
+                      let longitude = Double(heroLocation.longitud ?? "") else {
+                    return nil
+                }
+                
+                return HeroAnnotation(
+                    title: hero.name ?? "unknown",
+                    info: heroLocation.dateShow ?? "Not available",
+                    coordinate: .init(latitude: latitude, longitude: longitude)
+                )
+            }
+    }
 }

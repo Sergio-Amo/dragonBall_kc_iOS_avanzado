@@ -188,7 +188,7 @@ extension HeroesViewController {
             self?.view.layoutIfNeeded()
         }
         
-        !shouldHide ? filterField.becomeFirstResponder() : filterField.resignFirstResponder()
+        _ = !shouldHide ? filterField.becomeFirstResponder() : filterField.resignFirstResponder()
     }
     // OnFilter
     @IBAction func onFilter(_ sender: Any) {
