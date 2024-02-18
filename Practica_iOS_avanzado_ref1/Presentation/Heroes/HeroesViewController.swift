@@ -23,6 +23,7 @@ protocol HeroesViewControllerDelegate {
     func onViewAppear()
     func heroAt(index: Int) -> Hero?
     func heroDetailViewModel(for index: Int) -> HeroDetailViewControllerDelegate?
+    func heroesMapViewModel() -> HeroesMapViewControllerDelegate?
 }
 
 class HeroesViewController: UIViewController {
@@ -42,7 +43,7 @@ class HeroesViewController: UIViewController {
     
     // MARK: - Public Properties -
     var viewModel: HeroesViewControllerDelegate?
-
+    
     // MARK: - Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,32 +80,41 @@ class HeroesViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "HEROES_TO_HERODETAIL",
-              let index = sender as? Int,
-              let heroeDetailViewController = segue.destination as? HeroDetailViewController,
-              let heroDetailViewModel = self.viewModel?.heroDetailViewModel(for: index) else {
-            return
+        switch segue.identifier {
+            case "HEROES_TO_HERODETAIL":
+                guard let index = sender as? Int,
+                      let heroeDetailViewController = segue.destination as? HeroDetailViewController,
+                      let heroDetailViewModel = self.viewModel?.heroDetailViewModel(for: index) else {
+                    return
+                }
+                heroeDetailViewController.viewModel = heroDetailViewModel
+                
+            case "HEROES_TO_HEROESMAP":
+                guard let heroesMapViewController = segue.destination as? HeroesMapViewController else { return }
+                heroesMapViewController.viewModel = viewModel?.heroesMapViewModel()
+                
+            default:
+                break
+                
         }
-        heroeDetailViewController.viewModel = heroDetailViewModel
-
     }
     
     // MARK: - Private functions -
     private func initViews() {
         tableView.register(UINib(nibName: HeroesTableViewCell.identifier, bundle: nil),
                            forCellReuseIdentifier: HeroesTableViewCell.identifier)
-
+        
         tableView.delegate = self
         tableView.dataSource = self
     }
-
+    
     private func setObservers() {
         viewModel?.viewState = { [weak self] state in
             DispatchQueue.main.async {
                 switch state {
                     case .loading(let isLoading):
                         self?.loadingView.isHidden = !isLoading
-
+                        
                     case .updateData:
                         self?.tableView.reloadData()
                 }
@@ -118,11 +128,11 @@ extension HeroesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel?.heroesCount ?? 0
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         self.estimatedHeight
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: HeroesTableViewCell.identifier,
@@ -146,7 +156,7 @@ extension HeroesViewController: UITableViewDataSource, UITableViewDelegate {
         if searchIsHidden || scrollView.contentOffset.y == .zero { return }
         if !searchIsHidden { showSearch(shouldHide: true) }
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(
             withIdentifier: "HEROES_TO_HERODETAIL",

@@ -56,6 +56,10 @@ class HeroesViewModel: HeroesViewControllerDelegate {
                                    hero: hero)
     }
     
+    func heroesMapViewModel() -> HeroesMapViewControllerDelegate? {
+        return HeroesMapViewModel(networkApi: networkApi)
+    }
+    
     func filterHeroes(currentFilter: String) {
         
         // Update the table and lastFilter value

@@ -64,10 +64,6 @@ final class HeroesMapViewController: UIViewController {
             }
             return nil
         })
-        // Center map to first valid coordinate
-        if let location = lastValidlocations?.first?.coordinate {
-            mapOutlet.centerCoordinate = location
-        }
         // Add annotations
         lastValidlocations?.forEach { mapOutlet.addAnnotation($0) }
     }
