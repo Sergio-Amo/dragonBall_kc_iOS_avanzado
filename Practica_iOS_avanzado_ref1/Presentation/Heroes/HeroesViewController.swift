@@ -35,6 +35,7 @@ class HeroesViewController: UIViewController {
     // MARK: - IBOutlets -
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingView: UIView!
+    // I discovered there's a built in searchbar way before implementing my own using a filter field
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var filterField: UITextField!
     
