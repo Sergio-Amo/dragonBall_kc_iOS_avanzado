@@ -16,6 +16,9 @@
 		2725B0162AED69BF00C880ED /* HeroLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0152AED69BF00C880ED /* HeroLocation.swift */; };
 		2725B01A2AED6D3400C880ED /* HeroDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B0192AED6D3400C880ED /* HeroDAO.swift */; };
 		2725B01C2AED6E9800C880ED /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2725B01B2AED6E9800C880ED /* CoreDataStack.swift */; };
+		276427592B826E7700C1811D /* HeroesMap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 276427582B826E7700C1811D /* HeroesMap.storyboard */; };
+		2764275B2B826E9E00C1811D /* HeroesMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2764275A2B826E9E00C1811D /* HeroesMapViewController.swift */; };
+		2764275D2B826EAA00C1811D /* HeroesMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2764275C2B826EAA00C1811D /* HeroesMapViewModel.swift */; };
 		279E55B32AEDC41200DCA2F7 /* Extension+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279E55B22AEDC41200DCA2F7 /* Extension+URL.swift */; };
 		27CD84A42AED091800344B3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CD84A32AED091800344B3E /* AppDelegate.swift */; };
 		27CD84A62AED091800344B3E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CD84A52AED091800344B3E /* SceneDelegate.swift */; };
@@ -69,6 +72,9 @@
 		2725B0152AED69BF00C880ED /* HeroLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroLocation.swift; sourceTree = "<group>"; };
 		2725B0192AED6D3400C880ED /* HeroDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDAO.swift; sourceTree = "<group>"; };
 		2725B01B2AED6E9800C880ED /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		276427582B826E7700C1811D /* HeroesMap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HeroesMap.storyboard; sourceTree = "<group>"; };
+		2764275A2B826E9E00C1811D /* HeroesMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroesMapViewController.swift; sourceTree = "<group>"; };
+		2764275C2B826EAA00C1811D /* HeroesMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroesMapViewModel.swift; sourceTree = "<group>"; };
 		279E55B22AEDC41200DCA2F7 /* Extension+URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+URL.swift"; sourceTree = "<group>"; };
 		27CD84A02AED091800344B3E /* Practica_iOS_avanzado_ref1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Practica_iOS_avanzado_ref1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27CD84A32AED091800344B3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -138,6 +144,9 @@
 		271BF8BC2AEE6DB4001BF16D /* HeroesMap */ = {
 			isa = PBXGroup;
 			children = (
+				276427582B826E7700C1811D /* HeroesMap.storyboard */,
+				2764275A2B826E9E00C1811D /* HeroesMapViewController.swift */,
+				2764275C2B826EAA00C1811D /* HeroesMapViewModel.swift */,
 			);
 			path = HeroesMap;
 			sourceTree = "<group>";
@@ -452,6 +461,7 @@
 				27CD84B02AED091900344B3E /* Assets.xcassets in Resources */,
 				27CD84F62AED411A00344B3E /* Heroes.storyboard in Resources */,
 				27CD84AB2AED091800344B3E /* Splash.storyboard in Resources */,
+				276427592B826E7700C1811D /* HeroesMap.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +489,7 @@
 				2725B0162AED69BF00C880ED /* HeroLocation.swift in Sources */,
 				27CD84DB2AED184100344B3E /* SplashViewModel.swift in Sources */,
 				279E55B32AEDC41200DCA2F7 /* Extension+URL.swift in Sources */,
+				2764275D2B826EAA00C1811D /* HeroesMapViewModel.swift in Sources */,
 				271BF8C52AEEB8B4001BF16D /* MapAnnotations.swift in Sources */,
 				27CD84FE2AED417D00344B3E /* HeroesTableViewCell.swift in Sources */,
 				27CD84E52AED1A5100344B3E /* VaultApi.swift in Sources */,
@@ -495,6 +506,7 @@
 				271BF8C02AEE6DE1001BF16D /* HeroDetailViewController.swift in Sources */,
 				271BF8C22AEE6DF2001BF16D /* HeroDetailViewModel.swift in Sources */,
 				2725B0142AED5EDC00C880ED /* Hero.swift in Sources */,
+				2764275B2B826E9E00C1811D /* HeroesMapViewController.swift in Sources */,
 				27CD84FA2AED416200344B3E /* HeroesViewModel.swift in Sources */,
 				271BF8C72AEEBC71001BF16D /* HeroLocationDAO.swift in Sources */,
 			);
