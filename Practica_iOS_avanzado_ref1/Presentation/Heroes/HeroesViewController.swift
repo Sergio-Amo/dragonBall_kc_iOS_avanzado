@@ -172,7 +172,6 @@ extension HeroesViewController {
         viewModel?.onResetPressed()
     }
     
-    // TODO: Navigate to HeroesMap
     @objc private func mapTapped() {
         performSegue(
             withIdentifier: "HEROES_TO_HEROESMAP",

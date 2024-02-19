@@ -27,8 +27,7 @@ class HeroDetailViewModel: HeroDetailViewControllerDelegate {
     // MARK: - Public functions -
     func onViewAppear() {
         viewState?(.loading(true))
-        // TODO: GetHeroLocation from getHeroLocationLocal fallback to getHeroLocationRemote
-        // TODO: Make all requests on viewModel INIT so it load while the view is painted.
+
         guard let id = self.hero.id else { return }
         
         guard let locations = CoreDataStack.shared.getHeroLocations(id:id),
