@@ -7,12 +7,11 @@
 
 import Foundation
 
-protocol NetworkApiProtocol {// TODO: CLEAN
+protocol NetworkApiProtocol {
+    init(vaultApi: VaultApiProtocol)
     func loginWith(user: String, password: String, completion: @escaping (Result<String, NetworkApi.NetworkError>) -> Void )
     func getHeroes(_ heroName: String?, completion: @escaping (Result<Heroes, NetworkApi.NetworkError>) -> Void )
     func getHeroLocations(id: String?, completion: @escaping (Result<HeroLocations, NetworkApi.NetworkError>) -> Void )
-    /*func getAllHeroLocations()*/
-    
 }
 
 final class NetworkApi: NetworkApiProtocol {
@@ -77,7 +76,6 @@ final class NetworkApi: NetworkApiProtocol {
         }.resume()
     }
     
-    // TODO: Clean
     func getHeroes(_ heroName: String? = nil, completion: @escaping (Result<Heroes, NetworkApi.NetworkError>) -> Void ) {
         guard let url = URL(string: "\(NetworkApi.apiBaseURL)\(Endpoint.heroes)"),
               let token = vaultApi.getToken() else {
@@ -124,7 +122,6 @@ final class NetworkApi: NetworkApiProtocol {
             completion(.success(heroes.sorted(by: {
                 $0.name ?? "zzz" < $1.name ?? "zzzz"
             })))
-            //completion(.success(heroes))
         }.resume()
     }
     
@@ -175,5 +172,3 @@ final class NetworkApi: NetworkApiProtocol {
         }.resume()
     }
 }
-
-

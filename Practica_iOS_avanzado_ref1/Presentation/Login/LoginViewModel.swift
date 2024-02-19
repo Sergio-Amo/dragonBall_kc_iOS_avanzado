@@ -61,7 +61,7 @@ final class LoginViewModel: LoginViewControllerDelegate {
         password.isEmpty == false && password.count >= 4
     }
 
-    private func doLoginWith(email: String, password: String) {
+    func doLoginWith(email: String, password: String) {
         networkApi.loginWith(user: email, password: password) { [weak self] result in
             switch result {
                 case .success(_):
@@ -80,13 +80,6 @@ final class LoginViewModel: LoginViewControllerDelegate {
                         image: "exclamationmark.circle",
                         text: "Error \(statusCode): No se ha podido completar la operación")
                     ))
-                    
-                    // TODO: AFTER LOGIN ERROR CHECK FOR LOCAL DATA AND OFFER TO NAVIGATE ON OFFLINE MODE
-                    
-                    // TODO: move this to the splash and add popup for errors
-                    /* if statusCode == 401 || statusCode == 403 {
-                     self?.vaultApi.removeToken()
-                     }*/
             }
         }
     }

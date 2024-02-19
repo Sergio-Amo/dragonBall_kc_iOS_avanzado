@@ -32,8 +32,8 @@ protocol ModelConvertible {
 
 class CoreDataStack: NSObject {
     // Singleton
-    static let shared: CoreDataStack = .init()
-    private override init() {}
+    static let shared: CoreDataStack = .init() // Instance
+    private override init() {}  // Private init
 
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {
