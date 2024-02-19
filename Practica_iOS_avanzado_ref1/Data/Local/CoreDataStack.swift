@@ -31,6 +31,7 @@ protocol ModelConvertible {
 }
 
 class CoreDataStack: NSObject {
+    // Singleton
     static let shared: CoreDataStack = .init()
     private override init() {}
 
